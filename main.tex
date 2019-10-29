@@ -1,0 +1,60 @@
+\documentclass[a4paper, 10pt]{report}
+\usepackage{inputenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage[backend=bibtex, style=authoryear, sorting=nyt]{biblatex}
+\addbibresource{citations.bib}
+
+\newcommand{\fypUniversity}{Brunel University London}
+\newcommand{\fypCollege}{College of Engineering, Design and Physical Sciences}
+\newcommand{\fypDepartment}{Department of Computer Science}
+\newcommand{\fypCourse}{BSc (Hons) Computer Science}
+\newcommand{\fypStudent}{Dominic Cobo}
+\newcommand{\fypStudentId}{1422016}
+\newcommand{\fypSupervisor}{tbd}
+\newcommand{\fypAcademicYear}{2019-2020}
+\newcommand{\fypTitle}{Bridging The Gap Between M.S.R. Research and Industrial Developers}
+
+% Define the page margins
+\geometry{
+	left=40mm,
+	right=25mm, 
+	top=25mm,
+	bottom=25mm
+}
+
+\begin{document}
+	\begin{titlepage}
+		\centering
+		\begin{figure}
+			\includegraphics[width=\linewidth]{logo.png}
+		\end{figure}
+		\textsc{\large \fypCourse}
+		
+		\textsc{\large Academic Year \fypAcademicYear}
+		
+		\rule{\linewidth}{0.5mm} \\[0.5cm]
+		{ \huge\textbf { \fypTitle } } \\
+		\rule{\linewidth}{0.5mm} \\[6cm]
+		
+		
+		\textsc{\large \fypStudent}
+		
+		\textsc{\large \fypStudentId}
+		\textsc{A report submitted in partial fulfilment of the requirements for the degree of Bachelor of Science.}
+		
+	\end{titlepage}
+	
+	\newpage
+	\input{abstract}
+	\input{toc}
+	\input{introduction}
+	\input{background}
+	\include{methodology}
+	\include{design}
+	\include{implementation}
+	\include{testing_evaluation}
+	\include{conclusions}
+	\include{appendices}
+	
+\end{document}
