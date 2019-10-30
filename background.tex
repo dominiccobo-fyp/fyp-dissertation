@@ -26,9 +26,24 @@ Looking at the push-based approach discussed in the Introduction, we may conside
 
 LSP provides a slim-lined model for solving the M x N language compatibility issue for IDEs. This means that contextual model can be developed once for a model and shared to all IDEs. The contextual model can be developed for any grammar once and shared for many IDEs. LSP is supported by most major IDEs.
 
-A consideration of the pull-based approach, we may consider extending the ideas developed by the Language Server Protocol to extend to the action and command APIs provided by most major IDEs.
+A consideration of the pull-based approach, we may consider extending the ideas developed by the Language Server Protocol to extend to the action and command APIs provided by most major IDEs (table \ref{table:1}).
 
-%TODO: insert table showing support by most major IDEs to illustrate point further. 
+\begin{table}
+\centering
+\begin{tabular}{ | c | c | c |}
+	\hline
+		IDE & Actions/Commands Support & LSP API Available?\\
+	\hline
+	\hline
+		JetBrains IDEs & Yes & Yes, via LSP4J\\ 
+		Visual Studio Code & Yes & Yes, via vscode-languageclient \\
+		Atom & Yes & Yes, via atom-language client.\\
+		Eclipse & Yes & Yes, via LSP4J\\
+	\hline
+\end{tabular}
+\caption{Action and LSP support across IDEs}
+\label{table:1}
+\end{table}
 
 
 \section{Are there any existing efforts in this field?}
