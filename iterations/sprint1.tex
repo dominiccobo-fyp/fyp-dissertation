@@ -2,9 +2,214 @@
 
 \subsection{Sprint Planning}
 
+\subsubsection{Impact Map}
+
+\digraph[width=\textwidth]{abc}{rankdir=LR; 
+	goal->consumer->consumerImpact->consumerDeliverable1;
+	consumer->consumerImpact2;
+	goal->actorB->actorBImpact->actorBDeliverable1;
+	actorBImpact->cmdForUsagesDeliverable;
+	consumerImpact2->cmdForUsagesDeliverable;
+	goal->actorC->actorCImpact->actorCDeliverable1;
+	
+	consumer [label=<Lib / API <br/> Consumer>];
+	consumerImpact [label=<Create usages>];
+	consumerImpact2 [label=<
+		Examples for implementation help>]
+	
+	consumerDeliverable1 [label=<Define examples of <br/> API consumption>]
+	actorBDeliverable1 [label=<
+		On IDE definition <br/> 
+		hover show pop <br/> 
+		up dialogue with uses
+	>];
+	
+	cmdForUsagesDeliverable [label=<
+		In IDE use command <br/> 
+		to request usages>
+	];
+	
+	actorB [label=<Lib / API <br/> Developer>];
+	actorBImpact [label=<
+		Understand how APIs <br/>
+		are consumed
+	>];
+	
+	actorC [label=<Software <br/> Miner>];
+	
+	actorCImpact[label=<Provide definitions <br/> and consumptions <br/> of APIs>]
+	actorCDeliverable1[label=<Ingest <br/>interface for miners to<br/> provide data>]
+	
+	goal [label=<
+		Greater context of <br/> 
+		of API usage <br/>
+		for decision making
+	>];
+
+}
+
+\subsubsection{Selected User Stories}
+	
+\begin{enumerate}
+
+	\item  As a library / API consumer when I hover over an API call or interface I want to see a list of usages so I can find implementation examples to gain a better  understanding of its usage.
+	
+	\item As a library developer when I hover over an API definition, I want to find implementation examples so that I understand who is using it and how they are using it. 
+	
+	\item For any understanding of usages and consumptions, allow me to provide this data for others.
+	
+\end{enumerate}
+
+\subsubsection{Sprint  Goal}
+
+The goal of this Sprint is to achieve an implementation where mock examples of API and Library usage can be fed and displayed to the interested parties in a push fashion.
+
 \subsection{Sprint Implementation}
+
+\subsubsection{Learning from Similar Problems}
+
+When thinking of creating reusable IDE Intelligence that can used to enrich context based on a given syntax and or grammar, we may consider the Language Server protocol. We may examine examples of its usage, such as Eclipse's Java LSP implementation, which uses the Eclipse Java Development Tools to provide Java support to all LSP supporting IDEs.
+
+\begin{figure}[h!]
+
+\digraph[width=\textwidth]{eclipseLanguageServer}{rankdir=LR; 
+	IDE->languageServer [label="Push Ctx"];
+	languageServer->IDE [label="Send ctx info"];
+	languageServer->eclipseJdt [label="Send File Ctx Info"]; 
+	eclipseJdt->languageServer [label="Send java ctx info"];
+	
+	languageServer[label=<Language Server>];
+	eclipseJdt[label=<Eclipse Java <br/> Development Toolkit>];
+}
+
+\end{figure}
+
+We are not interested in providing Java Language completion suggestions, as is the example case; instead, our case focuses on providing context information, with this sprint requiring the ability to display mock implementation examples.
+
+Replacing the ability to provide Java language suggestions as in the example with that of global context information, a way forward is visible.
+
+\begin{figure}[h!]
+	
+\digraph[width=\textwidth]{ctxResolverInfo}{rankdir=LR; 
+	IDE->languageServer [label="Push Ctx"];
+	languageServer->IDE [label="Send ctx info"];
+	languageServer->ctxProvider [label="Extracted Ctx Info"]; 
+	ctxProvider->languageServer [label="Resolved examples for ctx"];
+	
+	ctxProvider[label=<Context Provider>];
+	languageServer[label=<Language Server>];
+}
+
+\end{figure}
+
+\subsubsection{So how do we model a query context ?}
+
+Modelling a context object that would address every single need is difficult. Evolving an unstable API until we take into account the Pareto ratio of use cases, less so. 
+
+Repository mining is often done with a Version Control System as a source. A natural choice given this is the point of integration of many other systems. Sharing the reference to individual projects in a VCS seems a viable starting  point. We chose Git, based on its dominance as the go-to VCS.
+
+% TODO: ref needed. 
+
+\begin{figure}[h!]
+{\centering
+	\digraph{ctxObject} {	     
+		     Context [
+		     	fontsize=8
+		     	shape=none
+		     	label = <
+		     		<table cellborder="1" border="0" cellspacing="0">
+		     		<tr><td>Context</td></tr>
+		     		<tr><td>+ Git Context</td></tr>
+		     		<tr><td>+ Document Context</td></tr>	     		
+		     		</table>
+		     	>
+		     ];
+		     
+		     GitContext [
+		     fontsize=8
+		     shape=none
+		     label = <
+			     <table cellborder="1" border="0" cellspacing="0">
+			     <tr><td>Git Context</td></tr>
+			     <tr><td>+ Remote Name</td></tr>
+			     <tr><td>+ Remote URL</td></tr>	     		
+			     </table>
+		     >
+		     ];
+		     
+		     DocumentContext [
+		     fontsize=8
+		     shape=none
+		     label = <
+			     <table cellborder="1" border="0" cellspacing="0">
+			     <tr><td>Document Context</td></tr>
+			     <tr><td>+ File URI</td></tr>  		
+			     </table>
+		     >
+		     ];
+			
+	}
+	\caption{Query Context Model}
+}
+
+\end{figure}
+
+Each IDE will naturally have a varying level of intelligence and many will be able to provide these attributes without any implementation effort required. One must consider the lowest common denominator in order to avoid any unnecessary normalising implementation of the same logic across each IDE; for example, the URI of an open file and folders, allowing the language server to bare the burden of enriching these to produce a context object. 
+
+
+\begin{center}
+\begin{table}
+	\begin{tabular}{|c| p{10cm} |}
+	\hline 
+	IDE & API Description \\ 
+	\hline 
+	JetBrains IntelliJ & \url{http://www.jetbrains.org/intellij/sdk/docs/welcome.html} \\ 
+	\hline 
+	VSCode & \url{https://code.visualstudio.com/api} \\ 
+	\hline 
+	Atom & \url{https://flight-manual.atom.io/api/v1.43.0/AtomEnvironment/} \\ 
+	\hline 
+	Eclipse & \url{https://help.eclipse.org/2019-12/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fcore%2Fruntime%2FPlugin.html} 
+	\\
+	\hline 
+	\end{tabular} 
+	\caption{Extension API for main RTEs / IDEs}
+	\label{table:2}
+\end{table}
+\end{center}
 
 \subsection{Sprint Review}
 
+After demonstrating the resulting product of this sprint, we note that this approach suffers from multiple shortcomings.
+
+It is visibly computationally expensive to constantly react and respond to each IDE action to provide the necessary global context data. The latency taken to resolve this, running locally and with mocked data, suggests this approach as being non-viable. 
+
+Assessing against at our aim, whilst we have managed to enrich a our local scope with global context within the IDE, demonstrating sound feasibility, the latency, creates a natural impediment to usage.
+
+These learnings suggest the trial of an alternative approach: a command triggered pull-based model where the information is requested when needed.
+
+% TODO: latency, how does it affect UX reference ... (responsiveness)
 \subsection{Sprint Retrospective}
 
+% TODO : how did we go about packaging, testing etc...
+
+% What did we do that went well...
+
+initial setup of ... 
+Setup CI
+Setup Artefact management
+Setup version control
+Setup packaging of visual studio code extension
+
+clear view on rough architecture of application, good foundations to proceed.
+
+% what did we do that went bad
+
+deployment of application is still a little time consuming and must be ironed out over time, 
+esp using manually executed jar files.
+
+sprint rather complicated and overly full with work, but maybe potentially ignorable as we are still diverging on designing and yet to converge.
+
+% what could we do to improve...
+
+Improve packaging of server side application.
