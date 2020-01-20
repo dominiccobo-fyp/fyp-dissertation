@@ -82,6 +82,8 @@ When thinking of creating reusable IDE Intelligence that can used to enrich cont
 	eclipseJdt[label=<Eclipse Java <br/> Development Toolkit>];
 }
 
+\caption{Eclipse's Java Language Server}
+
 \end{figure}
 
 We are not interested in providing Java Language completion suggestions, as is the example case; instead, our case focuses on providing context information, with this sprint requiring the ability to display mock implementation examples.
@@ -99,8 +101,9 @@ Replacing the ability to provide Java language suggestions as in the example wit
 	ctxProvider[label=<Context Provider>];
 	languageServer[label=<Language Server>];
 }
-
+\caption{Using a language server as middleware to resolve context}
 \end{figure}
+
 
 \subsubsection{So how do we model a query context ?}
 
@@ -191,25 +194,24 @@ These learnings suggest the trial of an alternative approach: a command triggere
 % TODO: latency, how does it affect UX reference ... (responsiveness)
 \subsection{Sprint Retrospective}
 
-% TODO : how did we go about packaging, testing etc...
+\subsubsection{What went well?}
 
-% What did we do that went well...
+A large amount of the initial process-wise was focused on setting up the initial toolchain to assist the development. We followed the well established principles of the ``First Way: The Technical Practises of Flow''.
 
-initial setup of ... 
-Setup CI
-Setup Artefact management
-Setup version control
+%TODO: devops handbook reference 
+
+To create a solid deployment pipeline we adopted a replicable on-demand environment creation using vagrant. Defining a single source of truth of the system we chose GitLab. Eliminating repetitive tasks to facilitate creative effort, we sought to follow the principles of CI and CD, codifying our entire build, test and delivery process into GitLab CI. Resulting artifacts from these, were checked into an Azure maven repository.
+
 Setup packaging of visual studio code extension
 
-clear view on rough architecture of application, good foundations to proceed.
+We managed to establish a rough architecture of application, despite not being suitable, providing solid foundations to proceed.
 
-% what did we do that went bad
+\subsubsection{What didn't go so well?}
 
-deployment of application is still a little time consuming and must be ironed out over time, 
-esp using manually executed jar files.
+The current approach to application deployment is an imperative process, requiring the built jars to each be executed on the target VM. Whilst this is replicable, it is time consuming and makes testing incremental changes a little tedious, resulting in the tendency to create larger releases.
 
-sprint rather complicated and overly full with work, but maybe potentially ignorable as we are still diverging on designing and yet to converge.
+This iteration was rather intensive in terms of work done and could have done with a smaller, more granular goal in mind; however, given the whole implementation is still not rather clear at this stage, this isn't too big of a concern.
 
-% what could we do to improve...
+\subsubsection{What do we want to improve?}
 
-Improve packaging of server side application.
+The creation of environments is largely an imperative process, requiring lengthy scripts or command sequences to be typed in order to deploy the application. Next iteration we hope to iron out the packaging of the server side application through a more declarative approach. 
