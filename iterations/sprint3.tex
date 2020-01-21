@@ -1,0 +1,58 @@
+\section{Sprint 3}
+
+\subsection{Sprint Planning}
+
+\subsubsection{Impact Map}
+
+\begin{figure}[h!]
+	\digraph[width=\textwidth]{workItemsImpactMap}{rankdir=LR; 
+		direction=LR;
+		
+		goal->consumer;
+		goal->developer;
+		goal->miner;
+		
+		developer->awareness_of_consumer_related_work;
+		developer->contribute_work_items_associated_with_changes_to_api;
+		
+		awareness_of_consumer_related_work->pull_query_of_work_items_for_developer;
+		contribute_work_items_associated_with_changes->issues_raised_on_github;
+		contribute_work_items_associated_with_changes->issues_raised_on_gitlab;
+		
+		consumer->awareness_of_developer_changes_incidents;
+		awareness_of_developer_changes_incidents->pull_query_of_work_items_for_consumer;
+		
+		
+		consumer->contribute_work_items_associated_with_usages_of_api;
+		
+		contribute_work_items_associated_with_usages_of_api->issues_raised_on_github;
+		contribute_work_items_associated_with_usages_of_api->issues_raised_on_gitlab;
+		
+		miner->mine_provided_work_items;
+		
+		mine_provided_work_items->ingest_work_items_from_gitlab;
+		mine_provided_work_items->ingest_work_items_from_github;
+	}
+	\label{fig:workItemsImpactMap}
+	\caption{Impact Mapping a route to increased awareness of associated dwork items}
+\end{figure}
+
+\subsubsection{Selected User Stories}
+
+\subsubsection{Sprint Goal}
+
+Implement a working retrieval and ingesting of work items from GitHub based on a pull query command.
+
+\subsection{Sprint Implementation}
+
+Creation of a shared model of a work item.
+
+\subsection{Sprint Review}
+
+\subsection{Sprint Retrospective}
+
+\subsubsection{What went well?}
+
+\subsubsection{What didn't go so well?}
+
+\subsubsection{What do we want to improve?}

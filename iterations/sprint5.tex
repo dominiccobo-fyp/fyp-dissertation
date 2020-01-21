@@ -1,0 +1,66 @@
+\section{Sprint 5}
+
+\subsection{Sprint Planning}
+
+\subsubsection{Impact Map}
+
+\begin{figure}[h!]
+	\digraph[width=\textwidth]{expertsImpactMap}{rankdir=LR; 
+		direction=LR;
+		
+		goal->consumer;
+		goal->developer;
+		goal->miner;
+		
+		developer->awareness_of_top_consuming_experts;
+		developer->contribute_instances_of_expertise;
+		
+		%consumer branch
+		
+		consumer->awareness_of_domain_experts;
+		consumer->contribute_instances_of_consumption_expertise;
+		
+		contribute_instances_of_expertise->gitlab_contributions;
+		contribute_instances_of_expertise->github_contributions;
+		
+		awareness_of_domain_experts->pull_query_cmd_for_domain_experts;
+		contribute_instances_of_consumption_expertise->github_contributions;
+		contribute_instances_of_consumption_expertise->gitlab_contributions;
+		github_contributions->code_owners_file;
+		github_contributions->collaborators;
+		github_contributions->commit_authors;
+		
+		gitlab_contributions->project_members;
+		gitlab_contributions->commit_authors;
+		
+		
+		% miner branch
+		
+		miner->mine_provided_expert_data;
+		
+		mine_provided_expert_data->ingest_experts_from_gitlab;
+		mine_provided_expert_data->ingest_experts_from_github;
+		
+		% metadata supplements
+	}
+	\label{fig:expertsImpactMap}
+	\caption{Impact Mapping a route to increased awareness of domain experts}
+\end{figure}
+
+\subsubsection{Selected User Stories}
+
+\subsubsection{Sprint Goal}
+
+Implement a working retrieval of experts from GitHub based on a pull query command.
+
+\subsection{Sprint Implementation}
+
+\subsection{Sprint Review}
+
+\subsection{Sprint Retrospective}
+
+\subsubsection{What went well?}
+
+\subsubsection{What didn't go so well?}
+
+\subsubsection{What do we want to improve?}

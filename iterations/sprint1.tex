@@ -4,6 +4,8 @@
 
 \subsubsection{Impact Map}
 
+\begin{figure}[h!]
+
 \digraph[width=\textwidth]{abc}{rankdir=LR; 
 	goal->consumer->consumerImpact->consumerDeliverable1;
 	consumer->consumerImpact2;
@@ -11,6 +13,7 @@
 	actorBImpact->cmdForUsagesDeliverable;
 	consumerImpact2->cmdForUsagesDeliverable;
 	goal->actorC->actorCImpact->actorCDeliverable1;
+	consumerImpact2->actorBDeliverable1;
 	
 	consumer [label=<Lib / API <br/> Consumer>];
 	consumerImpact [label=<Create usages>];
@@ -40,13 +43,18 @@
 	actorCImpact[label=<Provide definitions <br/> and consumptions <br/> of APIs>]
 	actorCDeliverable1[label=<Ingest <br/>interface for miners to<br/> provide data>]
 	
-	goal [label=<
+	goal [
+		label=<
 		Greater context of <br/> 
 		of API usage <br/>
 		for decision making
 	>];
 
 }
+
+\caption{Sprint 1 - Impact map for greater context (of API usage)}
+
+\end{figure}
 
 \subsubsection{Selected User Stories}
 	
