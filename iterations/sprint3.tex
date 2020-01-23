@@ -4,7 +4,7 @@
 
 \subsubsection{Impact Map}
 
-\begin{figure}[h!]
+\begin{figure}[!h]
 	\digraph[width=\textwidth]{workItemsImpactMap}{rankdir=LR; 
 		direction=LR;
 		
@@ -13,11 +13,10 @@
 		goal->miner;
 		
 		developer->awareness_of_consumer_related_work;
-		developer->contribute_work_items_associated_with_changes_to_api;
+		developer->contribute_work_items_associated_with_changes;
 		
 		awareness_of_consumer_related_work->pull_query_of_work_items_for_developer;
-		contribute_work_items_associated_with_changes->issues_raised_on_github;
-		contribute_work_items_associated_with_changes->issues_raised_on_gitlab;
+		contribute_work_items_associated_with_changes->see_mined_content;
 		
 		consumer->awareness_of_developer_changes_incidents;
 		awareness_of_developer_changes_incidents->pull_query_of_work_items_for_consumer;
@@ -25,16 +24,59 @@
 		
 		consumer->contribute_work_items_associated_with_usages_of_api;
 		
-		contribute_work_items_associated_with_usages_of_api->issues_raised_on_github;
-		contribute_work_items_associated_with_usages_of_api->issues_raised_on_gitlab;
+		contribute_work_items_associated_with_usages_of_api->see_mined_content;
 		
 		miner->mine_provided_work_items;
 		
 		mine_provided_work_items->ingest_work_items_from_gitlab;
 		mine_provided_work_items->ingest_work_items_from_github;
+		
+		goal[
+			label=<Increase global <br/> awareness of work items>
+		];
+		
+		awareness_of_consumer_related_work[
+			label=<Awareness of <br/> consumer related work>
+		];
+		
+		contribute_work_items_associated_with_changes[
+			label=<Contribute work items <br/> associated with changes>
+		];
+		
+		mine_provided_work_items[
+			label=<Mine provided <br/> work items>
+		];
+		
+		awareness_of_developer_changes_incidents[
+			label=<Awareness of developer <br/> changes, incidents ...>
+		]
+		
+		contribute_work_items_associated_with_usages_of_api[
+			label=<Contribute work items <br/> associated with <br/> usages of API>
+		];
+		
+		pull_query_of_work_items_for_consumer[
+			label=<Pull query for <br/> work items>
+		];
+		
+		see_mined_content[
+			label=<See Mined Content>
+		];
+		
+		pull_query_of_work_items_for_developer[
+			label=<Pull query for work items>
+		]; 
+		
+		ingest_work_items_from_gitlab[
+			label=<Ingest work <br/> items from gitlab>;
+		];
+		
+		ingest_work_items_from_github[
+			label=<Ingest work <br/> items from github>;
+		];
 	}
 	\label{fig:workItemsImpactMap}
-	\caption{Impact Mapping a route to increased awareness of associated dwork items}
+	\caption{Impact Mapping a route to increased awareness of work items}
 \end{figure}
 
 \subsubsection{Selected User Stories}

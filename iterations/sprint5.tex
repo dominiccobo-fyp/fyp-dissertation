@@ -5,49 +5,125 @@
 \subsubsection{Impact Map}
 
 \begin{figure}[h!]
-	\digraph[width=\textwidth]{expertsImpactMap}{rankdir=LR; 
-		direction=LR;
-		
+	\digraph[width=\textwidth]{expertsImpactMap}{rankdir=LR;
+		direction=LR; 
 		goal->consumer;
 		goal->developer;
 		goal->miner;
-		
+	
+		% developer branch
 		developer->awareness_of_top_consuming_experts;
 		developer->contribute_instances_of_expertise;
+		
+		contribute_instances_of_expertise->see_sources_mined;
+		
+		awareness_of_top_consuming_experts->pull_query_cmd_for_experts;
 		
 		%consumer branch
 		
 		consumer->awareness_of_domain_experts;
 		consumer->contribute_instances_of_consumption_expertise;
 		
-		contribute_instances_of_expertise->gitlab_contributions;
-		contribute_instances_of_expertise->github_contributions;
-		
 		awareness_of_domain_experts->pull_query_cmd_for_domain_experts;
-		contribute_instances_of_consumption_expertise->github_contributions;
-		contribute_instances_of_consumption_expertise->gitlab_contributions;
-		github_contributions->code_owners_file;
-		github_contributions->collaborators;
-		github_contributions->commit_authors;
 		
-		gitlab_contributions->project_members;
-		gitlab_contributions->commit_authors;
-		
+		contribute_instances_of_consumption_expertise->see_sources_mined;
 		
 		% miner branch
-		
 		miner->mine_provided_expert_data;
-		
 		mine_provided_expert_data->ingest_experts_from_gitlab;
+		ingest_experts_from_gitlab->miner_gitlab_project_members;
+		ingest_experts_from_gitlab->miner_gitlab_commit_authors;
+		
 		mine_provided_expert_data->ingest_experts_from_github;
+		ingest_experts_from_github->miner_github_code_owners_file;
+		ingest_experts_from_github->miner_github_collaborators;
+		ingest_experts_from_github->miner_github_commit_authors;
+			
 		
 		% metadata supplements
+		goal[
+			label=< Increase awareness <br/> of experts in field >
+		];
+		
+		%impacts
+		
+		awareness_of_domain_experts[
+			label=<Increased awareness <br/> of domain experts >
+		];
+		
+		contribute_instances_of_consumption_expertise[
+			label=<Contribute instances <br/> of consumption expertise>
+		];
+		
+		awareness_of_top_consuming_experts[
+			label=< Awareness of top <br/> consuming experts >
+		];
+		
+		contribute_instances_of_expertise[
+			label=<Contribute instances <br/> of expertise>
+		];
+		
+		mine_provided_expert_data[
+			label=<Mine provided <br/> expert data>
+		];
+		
+		% deliverables
+		
+		pull_query_cmd_for_domain_experts[
+			label=<Pull query command <br/> for domain experts>
+		]
+		
+		see_sources_mined[
+			label=<*See sources mined>
+		]; 
+		
+		pull_query_cmd_for_experts[
+			label=<Pull query command <br/> for experts>
+		];
+		
+		ingest_experts_from_gitlab[
+			label=<Ingest experts from <br/> Gitlab>
+		];
+		
+		ingest_experts_from_github[
+			label=<Ingest experts from <br/> Github>
+		];
+		
+		miner_gitlab_project_members[
+			label=<Project Members API>;
+		];
+		
+		miner_gitlab_commit_authors[
+			label=<Git Commit Authors>;
+		];
+		
+		miner_github_code_owners_file[
+			label=<Code <br/> Owners File>;
+		];
+		
+		miner_github_collaborators[
+			label=<Collaborators API>;
+		];
+		
+		miner_github_commit_authors[
+			label=<Git Commit Authors>
+		];
+		
 	}
 	\label{fig:expertsImpactMap}
 	\caption{Impact Mapping a route to increased awareness of domain experts}
 \end{figure}
 
 \subsubsection{Selected User Stories}
+
+\begin{enumerate}
+	\item As a API / library consumer, allow me to query for other experts, so that I am aware of those who may help me.
+	
+	\item As a API / library developer, allow me to query for experts associated with its consumption, so I can focus more on consumer-driven development.
+	
+	\item As a repository miner, allow me to provide expert data based on the existing GitHub APIs, to increase contextual information on domain experts.
+	
+\end{enumerate}
 
 \subsubsection{Sprint Goal}
 

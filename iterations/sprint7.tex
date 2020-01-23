@@ -4,15 +4,62 @@
 
 \subsubsection{Impact Map}
 
-\begin{figure}[h!]
+\begin{center}
 	
-\end{figure}
+	\digraph[width=\textwidth]{ds}{rankdir=LR; 
+		direction=LR;
+		goal->mined_content_provider;
+		goal->context_requestors;
+		mined_content_provider->prefetch_queries;
+		prefetch_queries->cache_query_results;
+		context_requestors->provide_context_earlier;
+		provide_context_earlier->periodically_broadcast_context;
+		
+		goal[
+			label=<Reduce time taken to <br/> display results <br/> to sub-1 second times>;
+		];
+		
+		mined_content_provider[
+			label=<Mined content <br/> provider>
+		];
+		
+		context_requestors[
+			label=<Context Requesters>
+		];
+		
+		prefetch_queries[
+			label=<Prefetch queries>
+		];
+		
+		cache_query_results[
+			label=<Cache query <br/>results>
+		];
+		
+		provide_context_earlier[
+			label=<Provide context earlier>
+		];
+		
+		periodically_broadcast_context[
+			label=<Periodically broadcast <br/> context>
+		];
+		
+		
+
+	}
+	
+\end{center}
 
 \subsubsection{Selected User Stories}
 
+\begin{enumerate}
+	\item As a content requester, I will periodically broadcast the context to allow others to prepare for any of my queries.
+	
+	\item As a mined content provider to respond more quickly to queries, I will prefetch and, or cache existing queries.
+\end{enumerate}
+
 \subsubsection{Sprint Goal}
 
-Implement a working retrieval of experts from GitLab based on a pull query command.
+Queries currently take a noticeable amount of time to resolve, we must improve the time it takes to return queries.
 
 \subsection{Sprint Implementation}
 
