@@ -274,3 +274,5 @@ TSWLatexianTemp*
 
 # gitignore
 *.iml
+
+!tlmgr_installed_packages.txt

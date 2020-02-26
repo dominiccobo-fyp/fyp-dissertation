@@ -2,22 +2,32 @@
 
 \section{The Problem}
 
-\normalfont There are a wide number of papers illustrating the large amount of data that can be mined from developers' interactions with their toolchain. This tool-chain often includes task and bug tracking systems (e.g. Jira, GitHub issues), Version Control Systems (e.g. Git, Mercurial), Continuous Integration \& Delivery (CI/CD) platforms (e.g. Jenkins, Travis CI) and general declarative or/and imperative based infrastructure.
+In the past two decades, perhaps as a result of the culmination of the DevOps and Agile cultural movements, business IT tools and the information these generate have proliferated exponentially.  %reference needed %
 
-This activity of exploring this data is known as Mining Software Repositories.
+Toolchains are now extensive, encompassing task and defect tracking systems (e.g. Jira, GitHub issues), Version Control Systems (e.g. Git, Mercurial), Continuous Integration \& Delivery (CI/CD) platforms (e.g. Jenkins, Travis CI), documentation (e.g. Confluence, Wiki Pages), deployment, configuration, orchestration and a plethora more.
 
-Much of this information falls short of its useful potential as it is not made readily available to the developer and thus further falls short of proving any real ecological validity and ultimately providing any benefit to the world.
+% reference needed demonstrating the categorisations of toolchain components, either from state of devops report or Project to product.
 
-\section{Setting the Vision}
+Each tool presents its own idiosyncrasies, each providing different approaches to performing a given task on a subset of information or data. Often their capabilities overlap with each other.
 
-To develop a common platform where context from any source can be EASILY integrated, aggregated and presented to the developer's working context when it is appropriate and, or needed to ultimately assist problem solving. 
+There are a wide number of papers illustrating the large amount of data that can be mined from developers' interactions with these toolchains. This activity is academically categorised as Mining Software Repositories.
 
-\section{Establishing the Goals to Achieve the Vision}
+% appendix material needed showing the number of journals here...
+
+This increase in interaction entry-points in pursuit of a more informed decision can result in a significant detraction from the task at hand, often yielding varying degrees of success. 
+
+Much of the usefulness that can be sourced both from the tools themselves, in addition to the derivative sourced academic counterparts, can fall short of providing any real ecological use to the developer given a lack of immediate availability to the context in hand.
+
+\section{The Vision}
+
+To develop a common platform where context from any source can be EASILY integrated, aggregated and presented to the developer's working context when it is appropriate and, or needed to ultimately positively influence problem solving. 
+
+\section{The Goals}
 
 \begin{enumerate}
-	\item[\#1] Develop a working IDE extension for at least one IDE that is capable of presenting the aggregated integrated information based on a relevant context for a particular topic or motif.
+	\item[\#1] Develop a working IDE extension for at least one IDE that is capable of presenting the aggregated integrated information based on a relevant context for a particular topic or motif. 
 	
-	\item[\#1a] Expand the historically local context scope of the IDE in favour of a more global, organisational, scope.
+	\item[\#1a] Facilitate the expansion of the historically local context scope of the IDE in favour of a more global, organisational, scope.
 	
 	\item[\#2] Establish a common integration point to ingest mined information from a given source. Imperatively, this must be modular and easily extensible to allow for a variety of data to be mined.
 	
@@ -25,6 +35,6 @@ To develop a common platform where context from any source can be EASILY integra
 	
 	\item[\#4] Reduce overall time taken to find relevant information for the present problem context.
 	
-	\item[\#5] Contrast the suitability of requesting - pulling - versus being fed - pushing - information, when it is somehow determined to be relevant. 
+	\item[\#5] Contrast the suitability of different information delivery mechanisms; concretely exploring, requesting - pulling - versus being fed - pushing - information, when it is somehow determined to be relevant. 
 	
 \end{enumerate}
