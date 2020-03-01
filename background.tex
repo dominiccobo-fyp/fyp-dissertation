@@ -6,12 +6,54 @@ Coming to terms with the ontology and epistemology of the problem do we realise,
 
 The intrinsic nature of the selection of tools is indicative of a personal preference on what we as humans consider individually useful. However, simultaneously the use of tools is theoretically supportive to the production and, or modification of a given software artefact to ultimately deliver business value - a measurable, quantifiable notion.
 
-Similarly, the disconnection existing between academics and industrial practitioners can serve as a source of how problems such as ours are investigated.
+Similarly, the disconnection existing between academics - favouring empirical approaches - and industrial practitioners - valuing a mixture of sources based on experience - can serve as a source of how problems such as ours are investigated.
 
 This suggests that what we constitute as the existence and exploration of reality and knowledge, in this case, is not a binary choice between ontological subjectivism and objectivism but rather a mixture of the two. Drawing from the strengths of both are we best enabled to contrast the different aspects of the problem. Understanding the objective nature of Realism, Empiricism and Positivism alongside the solely subjective nature of Interpretivism do we ultimately favour the stance of Pragmatism.
 
-The particular topic of Mining Software Repositories has its own conference \parencite{Storey:2019:3341883} which means that by assessing the assumptions made by these, a trend is apparent that the papers will go as far as creating tools, uncovering information or general datasets, but fall short of making it immediately useful in routine decision-making in Developer's problem solving.
+\section{Is the proliferation documented?}
 
+% TODO
+
+% Market growth rate of tools related to DevOpsy things is growing at a far greater pace than other tools. https://devops.com/downloads/the-state-of-devops-tools-2019/
+
+% 2017 SoDR https://media.webteam.puppet.com/uploads/2019/11/2017-state-of-devops-report-puppet-dora.pdf reveals how individual teams being allowed to choose tooling is highly important... 
+
+%https://cloudplatformonline.com/rs/248-TPC-286/images/DORA-State%20of%20DevOps.pdf organisations focus on buying tools over addressing core problems, leading to an increase in tools...
+
+% and https://media.webteam.puppet.com/uploads/2019/11/2015-state-of-devops-report.pdf (22) - on buzz-word compliant tools
+
+% https://services.google.com/fh/files/misc/state-of-devops-2014.pdf (29) yet again emphasizes the importance of being able to choose tools, standardization isn't necessarily good
+
+% not taking advantage of these tools is killing off even the most profitable companies  - https://www.weforum.org/agenda/2016/01/digital-disruption-has-only-just-begun/ so it's inherently natural that companies believe adopting them will lead to their survival.
+
+% P. Azhari, N. Faraby, A. Rossmann, B. Steimel and K. S. Wichmann, “Digital transformation report,” neuland GmbH & Co. KG., Köln, 2014.  identifies the multidimensionality of such.
+
+% M. Kersten, "A Cambrian Explosion of DevOps Tools," in IEEE Software, vol. 35, no. 2, pp. 14-17, March/April 2018. (https://ieeexplore.ieee.org/document/8314153) - directly explores the explosion of tools related to DevOps as a whole.
+
+
+\section{Does the adoption of these tools aid problem solving?}
+
+%TODO;
+
+% M. Kersten and G.C. Murphy, “Using Task Context to Improve Programmer Productivity,” Proc. 14th ACM SIGSOFT Int’l Symp. Foundations of Software Eng. (SIGSOFT/FSE 06)
+
+% reducing repetitive tasks, automating them allowing focus on the creative aspect.
+
+% P. Azhari, N. Faraby, A. Rossmann, B. Steimel and K. S. Wichmann, “Digital transformation report,” neuland GmbH & Co. KG., Köln, 2014.  identifies the multidimensionality of such.
+
+\section{How does fragmentation affect problem solving?}
+
+%TODO;
+
+\section{How has this proliferation been received by researchers?}
+
+The large adoption, but not necessarily proliferation, of tools has not gone unnoticed in academia. The usage of tools generates an innumerable sum of data of immense use in supporting research.
+
+Academic journals in Mining Software Repositories - e.g. \cite{Storey:2019:3341883} - have focused on exploiting this. Many of the papers in this field produce new tools, uncover new information or create new datasets, but generally fall short of make it readily available to routine decision making for the developers.
+
+For industry practitioners and researchers, these tools have provided the base for measuring against particular benchmarks and, or within certain frameworks as a way of supporting improvement and advances.
+
+% TODO: quantification needed
 
 \section{How do we know aggregated sources [e.g. in an IDE] helps productivity?}
 
@@ -30,11 +72,15 @@ The research presented by Klemola and Riling \parencite*{klemola2002modeling} su
 Sweller \parencite*{sweller1998cognitive} identifies that problem solving requires a significant amount of cognitive load. Miyake and Shah \parencite*{miyake1999models} explore the notion of limited working memory - which by extension establishes that there will be competition for cognitive resources. This shows that for developers, it is hypothetically detrimental to waste precious resources for problem solving on searching fragmented information.
 
 
-\section{How do we know the implementation is possible with current IDEs?}
+\section{Are there any similar issues?}
 
-Looking at the push-based approach discussed in the Introduction, we may consider the use of the Language Server Protocol (LSP) \parencite{lspGitHubSiteMSFT}.
+The logic compatibility matrix issue is not an unexplored issue in the domain of IDEs and RTEs. In the not too distant past, each environment had a programming language which it primarily focused on addressing, other support was either lacking or implemented to a less full degree. 
 
-LSP provides a slim-lined model for solving the M x N language compatibility issue for IDEs. This means that contextual model can be developed once for a model and shared to all IDEs. The contextual model can be developed for any grammar once and shared for many IDEs. LSP is supported by most major IDEs.
+This is known as the M x N language compatibility issue. For each environment, M, there exists the requirement to implement support for N given languages. Inherently, this results in the reinvention and, or reimplementation of the wheel for an identical requirement set bar the functional presentation and interaction.
+
+Building upon existing understanding of the benefits obtained by decoupling presentation and logic, resorting to thin clients, does the Language Server Protocol \parencite{lspGitHubSiteMSFT} appear in recent years.
+
+LSP provides a slim-lined model for solving the M x N language compatibility issue for development environments. The contextual model can be developed once for a given syntax and grammar and reused across all, providing these implement a very simple specification to handle interfacing with the user.
 
 A consideration of the pull-based approach, we may consider extending the ideas developed by the Language Server Protocol to extend to the action and command APIs provided by most major IDEs (table \ref{table:1}).
 
@@ -54,18 +100,3 @@ A consideration of the pull-based approach, we may consider extending the ideas 
 \caption{Action and LSP support across IDEs}
 \label{table:1}
 \end{table}
-
-
-\section{Are there any existing efforts in this field?}
-
-Papers from Mining Software Repositories illustrate the growing interest in extracting information from the toolchain, but present little exploration of delivering this information to aid periodic decision making. 
-
-%TODO: insert table / graph showing growth in interest supporting above claimm.
-
-The IEEE Transactions on Software Engineering Journal Series, presents a large amount of empirical research on the challenges faced in the world of Software Engineering. 
-
-%TODO: how do we reference a series of journals?
-
-The state-of-the-art-DevOps practices from annual conferences, such as All Day DevOps and Puppet's State of DevOps report, focus on the cultural change where all stakeholders are empowered to share more information to reduce feedback time-cycles when solving problems.
-
-%TODO: how do we reference a public report series such as the above or non academic conferences.
