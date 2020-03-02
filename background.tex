@@ -88,9 +88,63 @@ Sweller \parencite*{sweller1998cognitive} identifies that problem solving requir
 
 \section{On the Goals}
 
-\subsection{Extensions with IDEs}
+\subsection{Context in a Developer's Environments}
 
-% TODO: document the difference in implementation support between IDEs and Rich Text Editors...
+An Integrated Development Environment by definition aims to integrate a wide variety of tools used to develop software into a single cohesive interaction pane. 
+
+A by no means comprehensive exploration of literature from several sources suggests that IDEs and centralised information assist developers positively. 
+
+Literature from the popular Software Engineering teaching resource Software Engineering \parencite{Sommerville:2010:SE:1841764} page 37, states that "IDEs provide a common platform to communicate"; in page 197, he further elaborates on this suggesting "IDEs are a set of software tools supporting software development".
+
+The context provided within an IDE mainly focuses on the edition, manipulation and referential assistance for code; this is despite the suggestion that IDEs provide a platform to communicate.
+
+What is the difference between using separate tools and an integrated environment?
+
+\subsection{Comparing Extension in IDEs}
+
+Extension of existing functionality naturally requires a connecting programmatic interface from which to start from. Naturally, the functionality and approach to these extensions varies vastly from IDE to IDE, with standardisation seeming unlikely. 
+
+Looking at the most popular development environments, according to the annual StackOverflow Developer report \parencite{stackOverflowDevReport2019}, we dive into a comparison of each.
+
+% TODO: insert these as footnote references ...
+
+% https://marketplace.visualstudio.com/search?target=VSCode&category=All%20categories&sortBy=Installs
+
+% https://plugins.jetbrains.com/
+
+% https://marketplace.eclipse.org/
+
+% https://www.jetbrains.com/company/
+
+% https://archive.eclipse.org/eclipse/downloads/drops/R-1.0-200111070001/
+
+% https://github.com/microsoft/vscode/commits/master
+
+% https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/creating_plugin_project.html
+
+% https://code.visualstudio.com/api
+
+% https://www.eclipse.org/pde/
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|l|c|l|}
+	\hline 
+	\rule[-1ex]{0pt}{2.5ex} Name & Language & Platform & No. of Extensions & Released \\ 
+	\hline 
+	\hline 
+	\rule[-1ex]{0pt}{2.5ex} Visual Studio Code & Javascript & Node & ~16400 & Q4 2015\\ 
+	\hline 
+	\rule[-1ex]{0pt}{2.5ex} JetBrains IntelliJ & Java & OSGi  & ~4238 & Q1 2001 \\ 
+	\hline 
+	\rule[-1ex]{0pt}{2.5ex} Eclipse IDE & Java & OSGi & ~1713 & Q4 2001 \\ 
+	\hline 
+\end{tabular} 
+\caption{Comparison of IDE and their extensions}
+\end{table}
+
+This difference in language and integration approaches inherently means that functionality implemented in one IDE cannot be reused across another. Interestingly, we may note that even despite Eclipse IDE and JetBrains IntelliJ using the same language, even together they do not reach half the extensions available for Visual Studio Code.
 
 \subsection{Are there any similar issues?}
 
