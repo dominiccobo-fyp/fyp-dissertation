@@ -72,7 +72,13 @@ The research presented by Klemola and Riling \parencite*{klemola2002modeling} su
 Sweller \parencite*{sweller1998cognitive} identifies that problem solving requires a significant amount of cognitive load. Miyake and Shah \parencite*{miyake1999models} explore the notion of limited working memory - which by extension establishes that there will be competition for cognitive resources. This shows that for developers, it is hypothetically detrimental to waste precious resources for problem solving on searching fragmented information.
 
 
-\section{Are there any similar issues?}
+\section{On the Goals}
+
+\subsection{Extensions with IDEs}
+
+% TODO: document the difference in implementation support between IDEs and Rich Text Editors...
+
+\subsection{Are there any similar issues?}
 
 The logic compatibility matrix issue is not an unexplored issue in the domain of IDEs and RTEs. In the not too distant past, each environment had a programming language which it primarily focused on addressing, other support was either lacking or implemented to a less full degree. 
 
@@ -84,19 +90,19 @@ LSP provides a slim-lined model for solving the M x N language compatibility iss
 
 A consideration of the pull-based approach, we may consider extending the ideas developed by the Language Server Protocol to extend to the action and command APIs provided by most major IDEs (table \ref{table:1}).
 
-\begin{table}
-\centering
-\begin{tabular}{ | c | c | c |}
-	\hline
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{ | c | c | c |}
+		\hline
 		IDE & Actions/Commands Support & LSP API Available?\\
-	\hline
-	\hline
+		\hline
+		\hline
 		JetBrains IDEs & Yes & Yes, via LSP4J\\ 
 		Visual Studio Code & Yes & Yes, via vscode-languageclient \\
 		Atom & Yes & Yes, via atom-language client.\\
 		Eclipse & Yes & Yes, via LSP4J\\
-	\hline
-\end{tabular}
-\caption{Action and LSP support across IDEs}
-\label{table:1}
+		\hline
+	\end{tabular}
+	\caption{Action and LSP support across IDEs}
+	\label{table:1}
 \end{table}
