@@ -37,27 +37,52 @@ Supporting the accentuation of this growth, as a company working on integrating 
 
 %TODO;
 
-% M. Kersten and G.C. Murphy, “Using Task Context to Improve Programmer Productivity,” Proc. 14th ACM SIGSOFT Int’l Symp. Foundations of Software Eng. (SIGSOFT/FSE 06)
-
 Machines excel at reproducing repetitive logical, computational steps defined by humans. Reducing our involvement in repetitive tasks liberates our to perform tasks that require the creative cognitive abilities that until now only we posses.  
 
 This jump, now occurring in the tertiary sector is not unique and has long since been experienced in the primary and secondary sectors. 
 
-% TODO: find references.
+Car manufacturing is an example of this very phenomena where through the propagation of the Lean principles installed initially by the TPS, were repetitive tasks allocated to machines for humans to focus on the tasks they do better.% TODO: find references.
 
-P. Azhari, N. Faraby, A. Rossmann, B. Steimel and K. S. Wichmann, “Digital transformation report,” neuland GmbH \& Co. KG., Köln, 2014 (pp 153) identifies the multidimensionality of digitisation of work places as more than just tool adoption, instead consisting of being a more intricate mixture of technology, governance, people, culture, operations, products, leadership and strategy.
+However, it is important to note that the adoption of tools alone is not a silver bullet to all woes and worries in an organisation. 
+
+A 2014 report by \citeauthor{azhari2014digital} identifies the multidimensionality of digitisation of work places as more than just tool adoption, instead consisting of being a more intricate mixture of technology, governance, people, culture, operations, products, leadership and strategy.
+
+In Chapter 30 of Code Complete \parencite{codeComplete}, a widely accepted guideline for Software Development, the author identifies studies by which show that the usage of certain tools can help boost productivity by 50 percent or more (\cite{jones2000software}; \citeauthor{boehm2000software} \citeyear{boehm2000software}).
+
+%TODO: reference here on usage of search engines
+
+Albert Einstein once said: "Never memorise something that you can look up"; We developers use search engines repeatedly for reference purposes to refresh our minds on smaller intricacies of the syntax, language or problem context that we are working with. It only takes simple observation of any developer, experienced or inexperienced, to see the frequency of asserting their knowledge with the aid of external resources.
+
+Task management systems.
+
+- assist in documenting and coordinating tasks, defects and changes in a complex dynamic business environment.
+- work in these however can be buried, or "tidied away" through infinite taxonomical structure leading to an organised mess.
+
+Automated build systems 
+
+- these provide declarative, reproducible steps that enable a greater transparency into the assembly, testing and distribution of software artefacts.
+
+Messaging systems.
+
+Version control systems.
+
+- these enable developers to be 
+
+Documentation systems.
+
+- these enable the versioned, synchronised, sharing of documentation related to a product for reference purposes
+
+Monitoring / analytic tools.
 
 \subsection{On overlapping and duplicated capabilities}
 
+Much of the confusion around IT tools occur as a result of the duplication of functionality. This is not unique to computing. In the culinary world, there are hundreds of different types of knives, each ultimately achieves the same goal to process food but each user has a different preference. For novice cooks the confusion this degree of choice leads to is inevitable; the experienced cook, in contrast, has the knowledge to make an informed choice on the appropriate variety for the problem at hand. It is the challenge of any craftsperson of any domain to choose the right tool for the job.
+
 % TODO; 
 
-2017 SoDR https://media.webteam.puppet.com/uploads/2019/11/2017-state-of-devops-report-puppet-dora.pdf reveals how individual teams being allowed to choose tooling is highly important... 
+Research specific to the IT industry supports this analogy, with annual surveys such as the State of DevOps Report (\citedate{sodrPuppet2014}) (\citedate{sodrPuppet2017})  highlighting the importance of tailored, personal choice. 
 
 Disconnection can cause misalignment in value streams - mik kersten
-
-\subsection{How does fragmentation affect problem solving?}
-
-%TODO;
 
 \subsection{How has this proliferation been received by researchers?}
 
@@ -67,23 +92,29 @@ Academic journals in Mining Software Repositories - e.g. \cite{Storey:2019:33418
 
 For industry practitioners and researchers, these tools have provided the base for measuring against particular benchmarks and, or within certain frameworks as a way of supporting improvement and advances.
 
-% TODO: quantification needed
+% TODO: examples of benchmarks provided by tools.
 
-\subsection{How do we know aggregated sources [e.g. in an IDE] helps productivity?}
+\subsection{How does fragmentation affect problem solving?}
 
-An Integrated Development Environment by definition aims to integrate a wide variety of tools used to develop software into a single cohesive scope. 
-
-A by no means comprehensive exploration of literature from several sources suggests that IDEs and centralised information assist developers positively. 
-
-Literature from the popular Software Engineering teaching resource Software Engineering \parencite{Sommerville:2010:SE:1841764} page 37, states that "IDEs provide a common platform to communicate"; in page 197, he further elaborates on this suggesting "IDEs are a set of software tools supporting software development".
+%Two sides of this: we have the effect on product delivery
 
 Kersten's Project to Product \parencite*{kersten2018projecproduct} identifies the effect on the delivery of business value with the presence of a complex delivery chain of information, tools and processes.
+
+% and later on the developer's ability
 
 Researching psychology studies on the effect of information fragmentation on a person's ability to complete a task provides ample insight. 
 
 The research presented by Klemola and Riling \parencite*{klemola2002modeling} suggests that searching and using different tools forms part of the cognitive load that a developer must handle.
 
 Sweller \parencite*{sweller1998cognitive} identifies that problem solving requires a significant amount of cognitive load. Miyake and Shah \parencite*{miyake1999models} explore the notion of limited working memory - which by extension establishes that there will be competition for cognitive resources. This shows that for developers, it is hypothetically detrimental to waste precious resources for problem solving on searching fragmented information.
+
+\subsection{On the evolution of the craftsmanship of software}
+
+Fortran punch cards handed to developer
+
+Text editors
+
+Integrated development environments 
 
 
 \section{On the Goals}
@@ -98,13 +129,23 @@ Literature from the popular Software Engineering teaching resource Software Engi
 
 The context provided within an IDE mainly focuses on the edition, manipulation and referential assistance for code; this is despite the suggestion that IDEs provide a platform to communicate.
 
-What is the difference between using separate tools and an integrated environment?
+\citeauthor{kersten2006using} (\citedate{kersten2006using}) conclude in a study on enriching a developer's context using task-based context through various mechanisms, positively influences developer's productivity.
 
 \subsection{Comparing Extension in IDEs}
 
 Extension of existing functionality naturally requires a connecting programmatic interface from which to start from. Naturally, the functionality and approach to these extensions varies vastly from IDE to IDE, with standardisation seeming unlikely. 
 
 Looking at the most popular development environments, according to the annual StackOverflow Developer report \parencite{stackOverflowDevReport2019}, we dive into a comparison of each.
+
+Examining previous reports in this series: 
+
+https://insights.stackoverflow.com/survey/2018
+
+https://insights.stackoverflow.com/survey/2017
+
+https://insights.stackoverflow.com/survey/2016
+
+We can see a change in popularity.
 
 % TODO: insert these as footnote references ...
 
@@ -174,3 +215,7 @@ A consideration of the pull-based approach, we may consider extending the ideas 
 	\caption{Action and LSP support across IDEs}
 	\label{table:1}
 \end{table}
+
+\subsection{On structuring navigation for discoverability}
+
+https://www.nngroup.com/articles/flat-vs-deep-hierarchy/
