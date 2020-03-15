@@ -1,5 +1,48 @@
 \chapter{Iterations}
 
+\section{Establishing the Architectural Plumbing}
+
+There are two choices when it comes to creating modular applications, either a plugin based system, such as Java’s OSGi standard, or independent applications that communicate over some form of local or remote connection.
+
+Naturally, this poses questions as to what the nature of scale of the problem would be; in our case, tying multiple information sources together, typical of a medium size corporation do we lean to the solution that better applies to a larger scale.
+
+Extensibility in our case is important; there is an inexorable need for addition of new sources. Plugins are the inherent approach to providing modular extension to a monolithic architecture (Figure \ref{fig:monolithic-approach}). Whereas, as a superset of Service Oriented Architecture, Micro-services are more strongly decoupled (Figure \ref{fig:distributed-approach}), relying on middleware to communicate based on some form of predefined contract.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{monolithic-approach.png}
+	\caption{Component Diagram Illustrating Monolithic Approach}
+	\label{fig:monolithic-approach}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{distributed-application.png}
+	\caption{Component Diagram Illustrating Distributed Approach}
+	\label{fig:distributed-approach}
+\end{figure}
+
+With large amounts of data exchanged - as is the potential in the envisioned system - a single monolithic application acting as the single processor of the data can rapidly become the chokepoint, subject to temporary mediation via vertical scaling. In contrast, these problems are easily mitigated in distributed architecture through horizontal scaling.
+
+Microservices are no silver bullet approach to proverbial modularity and, or business scalability. In fact, they are often associated with greater development overhead, especially, in the aspect of integration and testing due to lack of immediate feedback on changes; the appropriation of the correct culture, practises and tooling can mitigate many of these overheads. Failing these appropriations, other common anti patterns may emerge, such as distributed monoliths. We will discuss these later.
+
+There are many integration patterns for distributed systems. EIP - a referential principle-driven manual - notes their shortcomings and benefits, but strongly recommends messaging integration patterns as the best approach for most Enterprise problems favouring them based on their high frequency, asynchronous capability.
+
+Implementing a fully functional, distributed messaging solution is complex endeavour; reinventing the wheel is futile when there are ample choices to choose from; RabbitMQ, Apache Kafka, to name a few. Not withstanding the reduction of unnecessary development effort, from the elimination of implementing middleware, duct tape code is still necessary to handle the endpoints connecting to these.
+
+The JVM and its associated languages, are ubiquitous in back office systems in many businesses across the globe; this maturity yields stage to many out-of-the-box solutions to common enterprise problems such as that which we have discussed. Spring is an example of one of the most widely adopted enterprise Java frameworks facilitating these aids.
+
+Spring itself does not however dictate the style of distributed programming but offers a strongly opinionated view on the approaches available. We chose the Command Query Responsibility Segregation (CQRS) approach based on its focus on separation of updating a set of projections - query models - and updating of a central decoupled model - command models. Implementing this pattern is infamously difficult, but with help of an extension based on Spring - Axon Framework - can we reduce much of this effort.  
+
+With the choice of Axon come some beneficial consequences. The framework provides a strongly opinionated view of what is best for the developer; its strong point lays in its approach to Messaging. It defines its own Message Bus implementation - which can be substituted from a set of other choices if needed - as well as handling all of the boiler-plating that would otherwise be needed to glue message endpoint consumption together.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{distributed-approach-with-axon.png}
+	\caption{Component Diagram Illustrating Axon Approach}
+	\label{fig:distributed-approach}
+\end{figure}
+
 \input{iterations/sprint1.tex}
 \input{iterations/sprint2.tex}
 \input{iterations/sprint3.tex}
