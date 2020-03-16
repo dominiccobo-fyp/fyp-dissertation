@@ -45,7 +45,6 @@ With the choice of Axon come some beneficial consequences. The framework provide
 
 \section{Establishing a Retrieval Mechanism}
 
-
 Having established, through thorough evaluation, a sound architecture, we proceed to establishing our approach to how data is expected to flow between the defined components. Having defined, and implemented a rough architecture above, we resort to implementing a minimum viable product for retrieving from a client for which we choose a HTTP Web Approach with a single test parameter in the pursuit of a creation of query handler that will return a basic hello world message returning the test parameter appended. Following this approach, we are able to create a very simple test case to verify the functionality (Figure \ref{fig:e2eMockTest}).
 
 \begin{figure}[h!]
@@ -72,9 +71,13 @@ To achieve the functionality, we define a query object capable of transmitting t
 	\label{fig:processSequenceQueryFlow}
 \end{figure}
 
-By implementing this approach, we end up with a core code example of what will form the implementation pattern throughout this project (Figure \ref{fig:e2eMockClass}).
+By implementing this approach, we end up with a core code example of what will form the implementation pattern throughout this project (Figure \ref{fig:e2eMockClass}). The simplicity of this approach is evident and strongly contributes to our goal of ease of extensibility. The complexity of deploying this distributed application is handled through the use of containerisation - Docker - and container orchestration - Docker Compose. 
 
-% TODO : link back to objective about simplicity of this approach.
+Despite not performing much processing, the response times indicate a positive approach to reducing the time taken to retrieve information.
+
+% TODO: insert graph here.
+
+% TODO: what are the response times like here?
 
 \begin{figure}[h!]
 	\centering
@@ -84,11 +87,246 @@ By implementing this approach, we end up with a core code example of what will f
 	\label{fig:e2eMockClass}
 \end{figure}
 
-\input{iterations/sprint1.tex}
-\input{iterations/sprint2.tex}
-\input{iterations/sprint3.tex}
-\input{iterations/sprint4.tex}
-\input{iterations/sprint5.tex}
-\input{iterations/sprint6.tex}
-\input{iterations/sprint7.tex}
-\input{iterations/sprint8.tex}
+\section{Connecting an IDE - Evaluating the Push Model}
+
+In the previous section, we successfully managed to establish a basic decoupled communication model that enabled the easy integration of information from a given source. In line with the background research, we have a key interest in reducing the amount of context switching between multiple sources performed by a developer and as found the IDE to be a suitable approach. We also explored the relevance of simple problems such as the Language Server Protocol. 
+
+We now explore the extension of our current solution in pursuit of the ability to connect it to an IDE. In this case, Visual Studio Code.  
+
+When thinking of creating reusable IDE Intelligence that can used to enrich context based on a given syntax and or grammar, we may consider the Language Server protocol. We may examine examples of its usage, such as Eclipse's Java LSP implementation, which uses the Eclipse Java Development Tools to provide Java support to all LSP supporting IDEs.
+
+\begin{figure}[h!]
+	
+	\digraph[width=\textwidth]{eclipseLanguageServer}{rankdir=LR; 
+		IDE->languageServer [label="Push Ctx"];
+		languageServer->IDE [label="Send ctx info"];
+		languageServer->eclipseJdt [label="Send File Ctx Info"]; 
+		eclipseJdt->languageServer [label="Send java ctx info"];
+		
+		languageServer[label=<Language Server>];
+		eclipseJdt[label=<Eclipse Java <br/> Development Toolkit>];
+	}
+	
+	\caption{Eclipse's Java Language Server}
+	
+\end{figure}
+
+We are not interested in providing Java Language completion suggestions, as is the example case; instead, our case focuses on providing context information, with this sprint requiring the ability to display mock implementation examples.
+
+Replacing the ability to provide Java language suggestions as in the example with that of global context information, a way forward is visible.
+
+\begin{figure}[h!]
+	
+	\digraph[width=\textwidth]{ctxResolverInfo}{rankdir=LR; 
+		IDE->languageServer [label="Push Ctx"];
+		languageServer->IDE [label="Send ctx info"];
+		languageServer->ctxProvider [label="Extracted Ctx Info"]; 
+		ctxProvider->languageServer [label="Resolved examples for ctx"];
+		
+		ctxProvider[label=<Context Provider>];
+		languageServer[label=<Language Server>];
+	}
+	\caption{Using a language server as middleware to resolve context}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+	\begin{subfigure}[t]{0.3\textwidth}
+		\includegraphics[width=1\linewidth]{push_trial_story.png}
+		\caption{User Story}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.6\textwidth}
+		\includegraphics[width=1\linewidth]{push-wireframe}
+		\caption{Wireframe}
+	\end{subfigure}
+	\label{fig:mvpPush}
+	\caption{Minimum Viable Product Illustration for Push Approach}
+\end{figure}
+
+After demonstrating the resulting product of this sprint, we note that this approach suffers from multiple shortcomings.
+
+It is visibly computationally expensive to constantly react and respond to each IDE action to provide the necessary global context data. The latency taken to resolve this, running locally and with mocked data, suggests this approach as being non-viable. 
+
+Assessing against at our aim, whilst we have managed to enrich a our local scope with global context within the IDE, demonstrating sound feasibility, the latency, creates a natural impediment to usage.
+
+These learnings suggest the trial of an alternative approach: a command triggered pull-based model where the information is requested when needed.
+
+\section{Connecting an IDE - Evaluating the Pull Model}
+
+With the performance and usability issues experienced through the push approach, implementing the Language Server Protocol, we resort to trialling a pull model. This conserves the architectural style, but drops the implementation of a language protocol in favour of a more bare-bones request-reply HTTP service. 
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[t]{0.3\textwidth}
+		\includegraphics[width=1\linewidth]{pull_trial_story.png}
+		\caption{User Story}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.6\textwidth}
+		\includegraphics[width=1\linewidth]{pull-wireframe}
+		\caption{Wireframe}
+	\end{subfigure}
+	\label{fig:mvpPull}
+	\caption{Minimum Viable Product Illustration for Pull Approach}
+\end{figure}
+
+\section{Reflecting on IDE Extension Development}
+We have mostly acted on a single, non-realistic, query payload for purpose of demonstration. 
+
+% TODO: we now see the how context can be done.
+
+Modelling a context object that would address every single need is difficult. Evolving an unstable API until we take into account the Pareto ratio of use cases, less so. 
+
+Repository mining is often done with a Version Control System as a source. A natural choice given this is the point of integration of many other systems. Sharing the reference to individual projects in a VCS seems a viable starting  point. We chose Git, based on its dominance as the go-to VCS.
+
+% TODO: ref needed. 
+
+\begin{figure}[h!]
+	{\centering
+		\digraph{ctxObject} {	     
+			Context [
+			fontsize=8
+			shape=none
+			label = <
+			<table cellborder="1" border="0" cellspacing="0">
+			<tr><td>Context</td></tr>
+			<tr><td>+ Git Context</td></tr>
+			<tr><td>+ Document Context</td></tr>	     		
+			</table>
+			>
+			];
+			
+			GitContext [
+			fontsize=8
+			shape=none
+			label = <
+			<table cellborder="1" border="0" cellspacing="0">
+			<tr><td>Git Context</td></tr>
+			<tr><td>+ Remote Name</td></tr>
+			<tr><td>+ Remote URL</td></tr>	     		
+			</table>
+			>
+			];
+			
+			DocumentContext [
+			fontsize=8
+			shape=none
+			label = <
+			<table cellborder="1" border="0" cellspacing="0">
+			<tr><td>Document Context</td></tr>
+			<tr><td>+ File URI</td></tr>  		
+			</table>
+			>
+			];
+			
+		}
+		\caption{Query Context Model}
+	}
+	
+\end{figure}
+
+Each IDE will naturally have a varying level of intelligence and many will be able to provide these attributes without any implementation effort required. One must consider the lowest common denominator in order to avoid any unnecessary normalising implementation of the same logic across each IDE; for example, the URI of an open file and folders, allowing the language server to bare the burden of enriching these to produce a context object. 
+
+\begin{center}
+	\begin{table}
+		\begin{tabular}{|c| p{10cm} |}
+			\hline 
+			IDE & API Description \\ 
+			\hline 
+			JetBrains IntelliJ & \url{http://www.jetbrains.org/intellij/sdk/docs/welcome.html} \\ 
+			\hline 
+			VSCode & \url{https://code.visualstudio.com/api} \\ 
+			\hline 
+			Atom & \url{https://flight-manual.atom.io/api/v1.43.0/AtomEnvironment/} \\ 
+			\hline 
+			Eclipse & \url{https://help.eclipse.org/2019-12/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fcore%2Fruntime%2FPlugin.html} 
+				\\
+				\hline 
+			\end{tabular} 
+			\caption{Extension API for main RTEs / IDEs}
+			\label{table:2}
+		\end{table}
+\end{center}
+
+	
+\section{Applying to Real Data - GitHub Work Items}
+
+- Why is this the next step?
+
+- What are work items?
+
+- Why GitHub?
+
+- What do we interpret as work items for Github?
+
+- How do we do this?
+
+- What are the alternative approaches to retrieving this data?
+
+- Is this quicker than retrieving the work items manually?
+
+\section{Applying to Real Data - GitLab Work Items}
+
+- Why is this the next step?
+
+- Why GitLab?
+
+- What do we interpret as work items for GitLab?
+
+- How do we do this?
+
+- What are the alternative approaches to retrieving this data?
+
+- Is this quicker than the alternative?
+
+\section{Applying to Real Data - GitHub Experts}
+
+- Why is this the next step?
+
+- What are experts?
+
+- Why GitHub?
+
+- What do we interpret as experts in GitHub?
+
+- What are the alternative approaches to retrieving this data?
+
+- What are the improvements over the alternative?
+
+\section{Addressing real world performance issues}
+
+- Why is this the next step?
+
+- What's the current performance
+
+- How do we identify the choke points?
+
+\section{Applying to Real Data - Stack Overflow Documentation}
+
+- Why is this the next step?
+
+- What is documentation
+
+- Why Stack overflow
+
+- What are the alternative approaches to retrieving this data.
+
+- What are the improvements over this?
+
+\section{Refining Presentation for Extensibility}
+
+- Why this step next?
+
+- What was wrong with the previous approach?
+
+- What is the new approach?
+
+- Does this new approach offer improvements?
+
+%\input{iterations/sprint1.tex}
+%\input{iterations/sprint2.tex}
+%\input{iterations/sprint3.tex}
+%\input{iterations/sprint4.tex}
+%\input{iterations/sprint5.tex}
+%\input{iterations/sprint6.tex}
+%\input{iterations/sprint7.tex}
+%\input{iterations/sprint8.tex}
