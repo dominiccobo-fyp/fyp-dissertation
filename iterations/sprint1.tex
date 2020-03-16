@@ -1,4 +1,4 @@
-\section{Sprint 1}
+\section{Evaluating the appropriateness of a push model}
 
 \subsection{Sprint Planning}
 
@@ -72,9 +72,14 @@
 
 The goal of this Sprint is to achieve an implementation where mock examples of API and Library usage can be fed and displayed to the interested parties in a push fashion.
 
+\subsubsection{Targetted goals}
+
+\# 1
+\# 2
+
 \subsection{Sprint Implementation}
 
-\subsubsection{Learning from Similar Problems}
+\subsubsection{Applying existing principles}
 
 When thinking of creating reusable IDE Intelligence that can used to enrich context based on a given syntax and or grammar, we may consider the Language Server protocol. We may examine examples of its usage, such as Eclipse's Java LSP implementation, which uses the Eclipse Java Development Tools to provide Java support to all LSP supporting IDEs.
 
@@ -166,6 +171,13 @@ Repository mining is often done with a Version Control System as a source. A nat
 \end{figure}
 
 Each IDE will naturally have a varying level of intelligence and many will be able to provide these attributes without any implementation effort required. One must consider the lowest common denominator in order to avoid any unnecessary normalising implementation of the same logic across each IDE; for example, the URI of an open file and folders, allowing the language server to bare the burden of enriching these to produce a context object. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\linewidth]{push-wireframe}
+	\caption{Illustration of a potential push model}
+	\label{fig:push-wireframe}
+\end{figure}
 
 
 \begin{center}

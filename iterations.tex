@@ -43,6 +43,47 @@ With the choice of Axon come some beneficial consequences. The framework provide
 	\label{fig:distributed-approach}
 \end{figure}
 
+\section{Establishing a Retrieval Mechanism}
+
+
+Having established, through thorough evaluation, a sound architecture, we proceed to establishing our approach to how data is expected to flow between the defined components. Having defined, and implemented a rough architecture above, we resort to implementing a minimum viable product for retrieving from a client for which we choose a HTTP Web Approach with a single test parameter in the pursuit of a creation of query handler that will return a basic hello world message returning the test parameter appended. Following this approach, we are able to create a very simple test case to verify the functionality (Figure \ref{fig:e2eMockTest}).
+
+\begin{figure}[h!]
+		\centering
+		\lstinputlisting[language=Python, showspaces=false,                
+		showstringspaces=false, tabsize=2]{e2e-acceptance-test-1.py}
+		\caption{End To End Test for Mock Example}
+		\label{fig:e2eMockTest}
+\end{figure}
+
+To achieve the functionality, we define a query object capable of transmitting the test payload. The query object also serves as the contract for those wishing the act on it based on its object signature. We model this process in Figure. Clients receive a query through an interface which they dispatch with context to the message bus and which is then returned from the appropriate source. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{first_e2e_test_class_uml.png}
+	\caption{UML Class Diagram of the models involved in building and responding to a query}
+	\label{fig:firste2etestclassuml}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{process-diagram.png}
+	\caption{Process diagram illustrating flow of query from its handling to response}
+	\label{fig:processSequenceQueryFlow}
+\end{figure}
+
+By implementing this approach, we end up with a core code example of what will form the implementation pattern throughout this project (Figure \ref{fig:e2eMockClass}).
+
+% TODO : link back to objective about simplicity of this approach.
+
+\begin{figure}[h!]
+	\centering
+	\lstinputlisting[language=Java, showspaces=false,                
+	showstringspaces=false, tabsize=2, breaklines=true]{mock-e2e.java}
+	\caption{End To End Implementation for Mock Example}
+	\label{fig:e2eMockClass}
+\end{figure}
+
 \input{iterations/sprint1.tex}
 \input{iterations/sprint2.tex}
 \input{iterations/sprint3.tex}
