@@ -1,5 +1,12 @@
 \chapter{Iterations}
 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{iterations-diagram.png}
+	\caption{Brief overview of the contents covered in each iteration}
+\end{figure}
+
+\newpage
 \section{Establishing the Architectural Plumbing}
 
 There are two choices when it comes to creating modular applications, either a plugin based system, such as Java’s OSGi standard, or independent applications that communicate over some form of local or remote connection.
@@ -39,7 +46,7 @@ With the choice of Axon come some beneficial consequences. The framework provide
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1\linewidth]{distributed-approach-with-axon.png}
-	\caption{Component Diagram Illustrating Axon Approach}
+	\caption{Component Diagram Illustrating Distributed Approach with Axon Framework}
 	\label{fig:distributed-approach}
 \end{figure}
 
@@ -89,11 +96,27 @@ Despite not performing much processing, the response times indicate a positive a
 
 \section{Connecting an IDE - Evaluating the Push Model}
 
-In the previous section, we successfully managed to establish a basic decoupled communication model that enabled the easy integration of information from a given source. In line with the background research, we have a key interest in reducing the amount of context switching between multiple sources performed by a developer and as found the IDE to be a suitable approach. We also explored the relevance of simple problems such as the Language Server Protocol. 
+In the previous section, we successfully managed to establish a basic decoupled communication model that enabled the easy integration of information from a given source. In line with the background research, we have a key interest in reducing the amount of context switching between multiple sources performed by a developer and as such found the IDE to be a suitable approach. We also explored the relevance of simple problems such as the Language Server Protocol. 
 
-We now explore the extension of our current solution in pursuit of the ability to connect it to an IDE. In this case, Visual Studio Code.  
+We now explore the extension of our current solution in pursuit of the ability to connect it to an IDE. In this case, Visual Studio Code. 
 
-When thinking of creating reusable IDE Intelligence that can used to enrich context based on a given syntax and or grammar, we may consider the Language Server protocol. We may examine examples of its usage, such as Eclipse's Java LSP implementation, which uses the Eclipse Java Development Tools to provide Java support to all LSP supporting IDEs.
+When thinking of creating reusable IDE Intelligence that can used to enrich context based on a given syntax and or grammar, we may consider the Language Server protocol. 
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[t]{0.3\textwidth}
+		\includegraphics[width=1\linewidth]{push_trial_story.png}
+		\caption{User Story}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.6\textwidth}
+		\includegraphics[width=1\linewidth]{push-wireframe}
+		\caption{Wireframe}
+	\end{subfigure}
+	\label{fig:mvpPush}
+	\caption{Minimum Viable Product Illustration for Push Approach}
+\end{figure}
+
+We may examine examples of its usage, such as Eclipse's Java LSP implementation, which uses the Eclipse Java Development Tools to provide Java support to all LSP supporting IDEs.
 
 \begin{figure}[h!]
 	
@@ -129,31 +152,23 @@ Replacing the ability to provide Java language suggestions as in the example wit
 	\caption{Using a language server as middleware to resolve context}
 \end{figure}
 
-\begin{figure}[h!]
-    \centering
-	\begin{subfigure}[t]{0.3\textwidth}
-		\includegraphics[width=1\linewidth]{push_trial_story.png}
-		\caption{User Story}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.6\textwidth}
-		\includegraphics[width=1\linewidth]{push-wireframe}
-		\caption{Wireframe}
-	\end{subfigure}
-	\label{fig:mvpPush}
-	\caption{Minimum Viable Product Illustration for Push Approach}
-\end{figure}
+
+
+\subsection{So how effective is this approach?}
 
 After demonstrating the resulting product of this sprint, we note that this approach suffers from multiple shortcomings.
 
 It is visibly computationally expensive to constantly react and respond to each IDE action to provide the necessary global context data. The latency taken to resolve this, running locally and with mocked data, suggests this approach as being non-viable. 
 
-Assessing against at our aim, whilst we have managed to enrich a our local scope with global context within the IDE, demonstrating sound feasibility, the latency, creates a natural impediment to usage.
+Whilst difficult to orchestrate a test on the current performance, we can hypothesise on its effect. If a developer performs several actions such as clicking, highlighting and hovering in the course of 10 seconds, say 8 events, with each request triggered requiring ~1s to respond, that is a total of 8 seconds in which the client is stuck in a state of non responsiveness; this incurs an overall time of 18 seconds. Guidelines from \citeauthor{nielsen1994usability} (\citeyear{nielsen1994usability}) indicate this is sufficient to exceed the user's flow of thought. 
 
-These learnings suggest the trial of an alternative approach: a command triggered pull-based model where the information is requested when needed.
+Assessing against at our aim, whilst we have managed to enrich a our local scope with global context within the IDE, demonstrating sound feasibility, the latency, creates a natural impediment to usage. It also clearly violates our objective to reduce the overall time taken to find relevant information (Objective 1).
+
+These learnings suggest the trial of an alternative approach; adopting a command triggered pull-based model where the information is requested when needed.
 
 \section{Connecting an IDE - Evaluating the Pull Model}
 
-With the performance and usability issues experienced through the push approach, implementing the Language Server Protocol, we resort to trialling a pull model. This conserves the architectural style, but drops the implementation of a language protocol in favour of a more bare-bones request-reply HTTP service. 
+With the performance and usability issues experienced through the push approach, implementing the Language Server Protocol, we resort to trialling a pull model (Figure \ref{fig:mvpPull}). A pull model implies that for the data to be displayed in the IDE, it must be explicitly requested.
 
 \begin{figure}[h!]
 	\centering
@@ -165,148 +180,322 @@ With the performance and usability issues experienced through the push approach,
 		\includegraphics[width=1\linewidth]{pull-wireframe}
 		\caption{Wireframe}
 	\end{subfigure}
-	\label{fig:mvpPull}
 	\caption{Minimum Viable Product Illustration for Pull Approach}
+	\label{fig:mvpPull}
 \end{figure}
 
-\section{Reflecting on IDE Extension Development}
-We have mostly acted on a single, non-realistic, query payload for purpose of demonstration. 
 
-% TODO: we now see the how context can be done.
+Requiring the end user to request information, rather than barraging them with it based on their interaction events (Figure \ref{fig:commonLSPEvents}), is theoretically expected to result in a reduction of the request rate and thus increase in performance. This approach also allows for a more rich, interactive display of results without needing to worry about excessive invasiveness or distraction.
+
+\begin{figure}[h!]
+	\centering
+	\digraph[width=0.7\textwidth]{eventsLSP}{ 
+		events->click;
+		events->hover;
+		events->highlight;
+		events->find_references;
+	}
+	\caption{Commonly triggered events using Language Server Protocol}
+	\label{fig:commonLSPEvents}
+\end{figure}
+
+To achieve this we need not scrap entirely what was done previously. Instead we conserve the architectural style, but drop the implementation of a language protocol in favour of a more bare-bones request-reply HTTP service displaying our results using simple web technology. By using HTML and Javascript, we are able to leverage web technologies to provide a simpler, richer interaction. 
+
+Web technologies can be leveraged for presentation throughout most of the common IDEs we have examined (Table \ref{table:webviewSupportByIDE}). This by nature means that we can reuse what we write, for our current instance of VSCode, across other IDEs.
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline 
+		Environment & Supports Web Technology \\ 
+		\hline 
+		\hline 
+		JetBrains IntelliJ & Yes, via JFrame WebView \\ 
+		\hline 
+		Visual Studio Code & Yes, via Electron WebView  \\ 
+		\hline 
+		Atom & Yes, via Electron WebView  \\ 
+		\hline 
+		Eclipse & Yes, via SWT Browser Support \\ 
+		\hline 
+	\end{tabular} 
+	\caption{Web Technology Support by IDE}
+	\label{table:webviewSupportByIDE}
+\end{table}
+
+We initially opt for no formatting and jQuery, to simplify the retrieval and updating of results in the web document we show. jQuery facilitates HTTP interaction through its Ajax library. 
+
+On the server side, we cease all dependency on the Language Server Protocol. We conserve the previously developed integration between the application and the message bus, but replace the implemented event listeners for the LSP specification with a single HTTP JSON REST interface. 
+
+We choose the convention of \textit{http://localhost:[port]/[topic]} for data access. Parameter for queries are appended as URI parameters rather than as a body (e.g. \textit{?paramA=value}), this includes paging of any data. Each request is synchronous and blocking until a response is fully transmitted. This blocking behaviour is identical as with the LSP approach.
+
+\subsection{Does this offer an improvement?}
+
+The immediate reduction of requests based on the human constraint of only being able to make one query at a time will inherently improve performance even with the presence of synchronous calls. Say the end user only requires to lookup information every 10 or 20 seconds, given there is only request per time frame, there is less opportunity to block the request queue.
+
+\section{Connecting an IDE - Expanding the Query Approach}
+
+We have mostly acted on a single, non-realistic, query payload for purpose of demonstrating the architecture and high level process. Information retrieval itself is a matter subjective to a given context with a particular associated query for what needs extracting for that context. 
+
+The context and the query is provided to those who have mined a given motif so that they can respond with the most tailored response to address the request's need. As such it is imperative to find a way of effectively and efficiently communicating the current scenario de the developer is working on.
+
+\subsection{So how do we model a context?}
 
 Modelling a context object that would address every single need is difficult. Evolving an unstable API until we take into account the Pareto ratio of use cases, less so. 
 
-Repository mining is often done with a Version Control System as a source. A natural choice given this is the point of integration of many other systems. Sharing the reference to individual projects in a VCS seems a viable starting  point. We chose Git, based on its dominance as the go-to VCS.
+Each IDE will naturally have a varying level of intelligence and many will be able to provide these attributes without any implementation effort required. One must consider the lowest common denominator in order to avoid any unnecessary normalising implementation of the same logic across each IDE; for example, the URI of an open file and folders (Table \ref{table:openFolderFileUriSupportByIDE}), allowing the language server to bare the burden of enriching these to produce a context object. 
 
-% TODO: ref needed. 
+Repository mining is often done with a Version Control System as a source. A natural choice given this is the point of integration of many other systems. Sharing the reference to individual projects in a VCS seems a viable starting  point. We chose Git, based on its dominance as the go-to VCS in current practises. 
+
+Git repositories are formed from a root folder containing a series of files denoting the historical graphs of changes. This exists alongside the actual current version of the files which the developer is manipulating. We are able to deduce the existence of a repository by looking for this special folder containing a graph.
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline 
+		Environment & Supports Open File and Folder URI \\ 
+		\hline 
+		\hline 
+		JetBrains IntelliJ & Yes\\ 
+		\hline 
+		Visual Studio Code & Yes \\ 
+		\hline 
+		Atom & Yes  \\ 
+		\hline 
+		Eclipse & Yes \\ 
+		\hline 
+	\end{tabular} 
+	\caption{Open Folder and File URI Support by IDE}
+	\label{table:openFolderFileUriSupportByIDE}
+\end{table}
+
+Based on this common denominator we are able to produce a context domain model (Figure: \ref{fig:contextObject}) which can be created and enriched through the local daemon (Figure: \ref{fig:contextCreationProcess}) when queries are received.
 
 \begin{figure}[h!]
-	{\centering
-		\digraph{ctxObject} {	     
-			Context [
-			fontsize=8
-			shape=none
-			label = <
-			<table cellborder="1" border="0" cellspacing="0">
-			<tr><td>Context</td></tr>
-			<tr><td>+ Git Context</td></tr>
-			<tr><td>+ Document Context</td></tr>	     		
-			</table>
-			>
-			];
-			
-			GitContext [
-			fontsize=8
-			shape=none
-			label = <
-			<table cellborder="1" border="0" cellspacing="0">
-			<tr><td>Git Context</td></tr>
-			<tr><td>+ Remote Name</td></tr>
-			<tr><td>+ Remote URL</td></tr>	     		
-			</table>
-			>
-			];
-			
-			DocumentContext [
-			fontsize=8
-			shape=none
-			label = <
-			<table cellborder="1" border="0" cellspacing="0">
-			<tr><td>Document Context</td></tr>
-			<tr><td>+ File URI</td></tr>  		
-			</table>
-			>
-			];
-			
-		}
-		\caption{Query Context Model}
-	}
-	
+	\centering
+	\includegraphics[width=0.9\linewidth]{context-object.png}
+	\caption{Query Context Model}
+	\label{fig:contextObject}
 \end{figure}
 
-Each IDE will naturally have a varying level of intelligence and many will be able to provide these attributes without any implementation effort required. One must consider the lowest common denominator in order to avoid any unnecessary normalising implementation of the same logic across each IDE; for example, the URI of an open file and folders, allowing the language server to bare the burden of enriching these to produce a context object. 
 
-\begin{center}
-	\begin{table}
-		\begin{tabular}{|c| p{10cm} |}
-			\hline 
-			IDE & API Description \\ 
-			\hline 
-			JetBrains IntelliJ & \url{http://www.jetbrains.org/intellij/sdk/docs/welcome.html} \\ 
-			\hline 
-			VSCode & \url{https://code.visualstudio.com/api} \\ 
-			\hline 
-			Atom & \url{https://flight-manual.atom.io/api/v1.43.0/AtomEnvironment/} \\ 
-			\hline 
-			Eclipse & \url{https://help.eclipse.org/2019-12/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fcore%2Fruntime%2FPlugin.html} 
-				\\
-				\hline 
-			\end{tabular} 
-			\caption{Extension API for main RTEs / IDEs}
-			\label{table:2}
-		\end{table}
-\end{center}
-
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{context-creation-process.png}
+	\caption{Context and Query Creation Process}
+	\label{fig:contextCreationProcess}
+\end{figure}
 	
 \section{Applying to Real Data - GitHub Work Items}
 
-- Why is this the next step?
+We now have a good foundation to integrate real data and ultimately prove the true viability and ecological validity of this tool we are developing. To do so we must start considering an extremely broad taxonomical structure of reasons why developers interact with external tools during problem solving problem for greater insight. 
 
-- What are work items?
+% TODO: user stories add them here....
 
-- Why GitHub?
+\subsection{What are work items?}
 
-- What do we interpret as work items for Github?
+Thus we consider the introduction of the notion of Work Items. Work Items are considered to be an entity that documents the existence of a task or running activity which is user driven. This is broad and may include general development work tracking systems, incident tracking systems, change management systems and others.
 
-- How do we do this?
+\subsection{Why GitHub?}
 
-- What are the alternative approaches to retrieving this data?
+Whilst integrating with academic tools would be the ideal scenario, we have been unable to find published tools with well defined APIs which we could integrate with; as such, we revert back to GitHub, which also supplies mined information, based on interactions with the Git repositories that it stores and manages, through a well documented, accessible API.
 
-- Is this quicker than retrieving the work items manually?
+\subsection{What do we interpret as work items for Github?}
+
+As discussed, what are constituted as Work Items varies enormously according to the bounded context in which they are situated in. For GitHub, we interpret Work Items to be synonymous with GitHub issues (Figure: \ref{fig:githubIssuesExample}). GitHub issues are the platform's way of expressing development work to do and filing bug reports.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{github-issues.png}
+	\label{fig:githubIssuesExample}
+	\caption{GitHub Issues Example}
+
+\end{figure}
+
+\subsection{What are the alternative approaches to retrieving this data?}
+
+To retrieve this information, those requiring it will either discover it through searching for similar problems via a search engine, such as Google or more commonly deliberately navigate to the project through GitHub, then to the issues and ultimately use the filtering system to find the issue that corresponds to them; this of course does not account for the initial difficulty in finding where this is stored.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{finding-issues-flowchart.png}
+	\caption{Context and Query Creation Process}
+	\label{fig:findingInformationStandardWay}
+\end{figure}
+
+The alternative to this is installing a plugin that individually supports integration with GitHub tracking; however, these require manual configuration with the project to which needs integrating and often clunky in unnecessary features.
+
+\subsection{How do we realise the integration?}
+
+We build on the evaluated, effective pull approach. This approach can be appreciated in Figure \ref{fig:gitHubWorkItemsWireframe}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{work-items-wireframe.png}
+	\label{fig:gitHubWorkItemsWireframe}
+	\caption{GitHub Work Items Results Wireframe}
+\end{figure}
+
+Using the approach discussed initially in Figure \ref{fig:e2eMockClass}, we must consider the ability to support the new notion of Work Items for queries and responses. Thus we elaborate models (Figure: \ref{fig:workItemsUMLModels}) to support these. In addition, to facilitate integration, we provide a contractual interface.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{work-items-class-uml.png}
+	\caption{Work Items UML Models}
+	\label{fig:workItemsUMLModels}
+\end{figure}
+
+The issue with responding for any query for work items is that we may not be interested or able to respond. As such we verify that 
+
+Building on good practise, providing integration test to ensure the integrity of the expectations and assumptions made when consuming GitHub's API. An integration test is run periodically against an API on every version change and, or on a periodic basis to ensure that the changes do not affect how one is using the API.
+
+However, another common issue with integration is catering for constantly changing APIs on multiple fronts; if a consumer A needs something from provider B, if provider B changes the format in which they offer the language, consumer A must now adapt to this change. In a large system where there are multiple consumers or providers, this can rapidly become a problem. In Software Engineering we refer to this dilemma as high coupling, a highly undesired property. High coupling can be remedied through intermediate abstractions, high level description of what is needed from each component. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{abstraction-of-github-workitems.png}
+	\caption{Work Items UML Models}
+	\label{fig:abstractionOfGitHubWorkItems}
+\end{figure}
+
+To achieve these abstractions in our case, we define the expected API model provided for GitHub Issues, an interface which defines what we want from this and then ultimately use this abstraction to convert our results into the Work Item Model.
+
+This provides us a clean integration approach as can be seen in Figure \ref{fig:gitHubworkItemsRetrievalProcess}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\linewidth]{github-workitems-retrieval-process.png}
+	\caption{GitHub Work Items Retrieval Process}
+	\label{fig:gitHubworkItemsRetrievalProcess}
+\end{figure}
+
+Last we need to enable support in the daemon to perform this query as well as the IDE integration point so that this new type of query can be presented to the user. To do so, we amend the implementation of \ref{fig:e2eMockClass} to support the newly developed models along with the corresponding jQuery client calls.
+
+\subsection{Is this quicker than retrieving the work items manually?}
+
+Yes, but why?
+
+Repeat manual approaches we conducted show the traditional approach taking a mean time of circa 42 seconds whereas with the implementation this is cut down to a mean time circa 12 seconds. 
+
+Could we use a box plot to show this?
+
+relate back to how this affects objective... 
+
+this is currently strong affected by the inability to perform observational studies because of COVID-19, consult tutor on how to proceed; we could just show own manual repetition as evaluation.
 
 \section{Applying to Real Data - GitLab Work Items}
 
-- Why is this the next step?
+To prove that multiple sources can be handled simultaneously, we choose to integrate another source that provides a clear defined API for providing its own interpretation of Work Items. At times, Git repositories may have multiple remotes, which can result in Work Items being distributed across these. We choose GitLab with the same criteria as we chose GitHub: its cleanly defined API.
 
-- Why GitLab?
+% TODO: user stories add them here....
 
-- What do we interpret as work items for GitLab?
+\subsection{What do we interpret as work items for GitLab?}
 
-- How do we do this?
+GitLab, just alike GitHub provides issues for documenting development work and software bugs. We will provide these in response to queries for Work Items.
 
-- What are the alternative approaches to retrieving this data?
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{gitlab-issues.png}
+	\label{fig:gitlabIssuesExample}
+	\caption{Example of GitLab Issues Interaction}
+\end{figure}
 
-- Is this quicker than the alternative?
+\subsection{How do we do this?}
+
+We have performed all the necessary modelling when previously exploring our approach with GitHub Issues as Work Items, and, as such only have the burden of providing the integration itself. This provides a good moment to explore the true difficulty of integrating new services with the existing system.
+
+Using the same approach as initially defined for retrieving items, we leverage the Scatter Gather pattern which combined with the aggregator pattern enables these query results to be joined. We apply exactly the same integration testing approach and domain abstraction layer.
+
+\subsection{What are the alternative approaches to retrieving this data?}
+
+The approach to retrieving Issues for GitLab is equally as lengthy as that of GitHub (Figure: \ref{fig:gitHubworkItemsRetrievalProcess}). This further highlights the time consuming nature if hypothetically one had to check both sites for issues.
+
+Another pattern that emerges is the necessity of a plugin per platform, which he hypothetically explored in the background section.
+
+\subsection{Is this quicker than the alternative?}
+
+Yes, but why?
+
+\subsection{How simple is integrating other sources?}
+
+In terms of the awful measurement of Lines of code, very simple. Difficulty wise, this is not very complex either. We could facilitate an even simpler approach through the use of code scaffolding tools such as Yeoman or using an initialiser like the ``Spring Initializr'' so that the integrating developer has as little boilerplate code to write as possible.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{spring-initializr.png}
+	\label{fig:springExample}
+	\caption{An example of a generation tool by Spring}
+\end{figure}
+
+\subsection{What are the key issues uncovered here?}
+
+As the number of components has grown, so has the complexity of starting up the server side.
 
 \section{Applying to Real Data - GitHub Experts}
 
 - Why is this the next step?
 
-- What are experts?
+We've proven this works well for other systems.
 
-- Why GitHub?
+We need to expand these to work for other potentially typical queries of developers.
 
-- What do we interpret as experts in GitHub?
+% TODO: user stories add them here....
 
-- What are the alternative approaches to retrieving this data?
+\subsection{What are experts?}
 
-- What are the improvements over the alternative?
+People with expertise in a given domain, whether it be from documenting, coding, participating in many pull requests... again it's all very subjective.
+
+\subsection{Why GitHub?}
+
+Again, because it has a well defined API.
+
+\subsection{What do we interpret as experts in GitHub?}
+
+Contributors as mined by GitHub and presented in their API.
+
+\subsection{What are the alternative approaches to retrieving this data?}
+
+Search engine, manual navigation, plugins? git blame?
+
+\subsection{What are the improvements over the alternative?}
+
+Quicker to access.
 
 \section{Addressing real world performance issues}
 
 - Why is this the next step?
 
-- What's the current performance
+Because the performance sucks seriously when retrieving repositories with large amounts of results to the extent that pagination doesn't appear to fix. It's an impediment to achieving multiple goals.
 
-- How do we identify the choke points?
+\subsection{What's the current performance?}
+
+Absolutely awful. Insert graph showing .4.0 0 performance of ~+30s for a large query.
+
+\subsection{How do we identify the choke points?}
+
+Heuristically working from the provider of the data backwards.
+
+Replaced use of API libraries with raw calls to remove caching for GitHub.
+
+Multiple buffer points. E.g. between IDE - Daemon - Resource - API.
+
+\subsection{Did we improve?}
+
+Show graph showing 0.6.1 performance vs 0.4.0.
 
 \section{Applying to Real Data - Stack Overflow Documentation}
 
 - Why is this the next step?
 
-- What is documentation
+Need to have one last form of common developer resource to illustrate and validate diverse application of the approach and explore any potential issues that may arise as a result of integrating multiple sources.
 
-- Why Stack overflow
+\subsection{What is documentation?}
+
+Documentation is considered to be anything that illustrates how a system, component, process or other works whether from an abstract point of view or concrete as may be code examples, test cases or questions and answers.
+
+\subsection{Why Stack overflow?}
+
+Well referred to resource by developers for solving. Provides an open API that is easy to interact with.
 
 - What are the alternative approaches to retrieving this data.
 
@@ -316,11 +505,13 @@ Each IDE will naturally have a varying level of intelligence and many will be ab
 
 - Why this step next?
 
-- What was wrong with the previous approach?
+\subsection{What was wrong with the previous approach?}
 
-- What is the new approach?
+\subsection{What is the new approach?}
 
-- Does this new approach offer improvements?
+\subsection{Does this new approach offer improvements?}
+
+Contributes to improved modularity.
 
 %\input{iterations/sprint1.tex}
 %\input{iterations/sprint2.tex}
