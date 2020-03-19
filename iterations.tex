@@ -294,7 +294,7 @@ We now have a good foundation to integrate real data and ultimately prove the tr
 
 \subsection{What are work items?}
 
-Thus we consider the introduction of the notion of Work Items. Work Items are considered to be an entity that documents the existence of a task or running activity which is user driven. This is broad and may include general development work tracking systems, incident tracking systems, change management systems and others.
+We consider the introduction of the notion of Work Items. Work Items are considered to be an entity that documents the existence of a task or running activity which is user driven. This is broad and may include general development work tracking systems, incident tracking systems, change management systems and others.
 
 \subsection{Why GitHub?}
 
@@ -347,7 +347,7 @@ Using the approach discussed initially in Figure \ref{fig:e2eMockClass}, we must
 
 The issue with responding for any query for work items is that we may not be interested or able to respond. As such we verify that 
 
-Building on good practise, providing integration test to ensure the integrity of the expectations and assumptions made when consuming GitHub's API. An integration test is run periodically against an API on every version change and, or on a periodic basis to ensure that the changes do not affect how one is using the API.
+We build on good practise \parencite{gamma1995design} \parencite{martin2009clean} by providing integration test to ensure the integrity of the expectations and assumptions made when consuming GitHub's API. An integration test is run periodically against an API on every version change and, or on a periodic basis to ensure that the changes do not affect how one is using the API.
 
 However, another common issue with integration is catering for constantly changing APIs on multiple fronts; if a consumer A needs something from provider B, if provider B changes the format in which they offer the language, consumer A must now adapt to this change. In a large system where there are multiple consumers or providers, this can rapidly become a problem. In Software Engineering we refer to this dilemma as high coupling, a highly undesired property. High coupling can be remedied through intermediate abstractions, high level description of what is needed from each component. 
 
@@ -440,39 +440,45 @@ As the number of components has grown, so has the complexity of orchestrating in
 
 \section{Applying to Real Data - GitHub Experts}
 
-- Why is this the next step?
+We've proven the effectiveness and viability and effectiveness of the solution when applied to documenting Work Items. We must provide an expansion to the available motifs or topics to cater for a wider variety of typical developer queries.
 
-We've proven this works well for other systems.
-
-We need to expand these to work for other potentially typical queries of developers.
 
 % TODO: user stories add them here....
 
 \subsection{What are experts?}
 
-People with expertise in a given domain, whether it be from documenting, coding, participating in many pull requests... again it's all very subjective.
+Cambridge Dictionary defines an expert as ``a person with a high level of knowledge or a skill relating to a particular subject or activity'' \citedate{cambrdigeDictionaryExpert}.
 
-\subsection{Why GitHub?}
-
-We choose to rely on GitHub yet again because it has a well defined API.
+We build on this suggesting that in our context, people are considered to have expertise in a given domain, if they participate in documenting, coding, feature or defect discussions or similar; but we strongly emphasize the subjective nature of this and its openness to interpretation by the provider.
 
 \subsection{What do we interpret as experts in GitHub?}
 
-Contributors as mined by GitHub and presented in their API.
+We choose to rely on GitHub yet again because it has a well defined API. GitHub itself uses Git and project dependency means to provide an insight into those who have participated in a project \footnote{\url{https://help.github.com/en/github/visualizing-repository-data-with-graphs/viewing-a-projects-contributors}}. The platform refers to these as contributors and provides API access to these.
 
 \subsection{How do we realise this integration?}
 
-Creation of model.
+This is an entirely new topic or motif that does not exist as part of our modelling, requiring us to evolve one. For now we model an Expert as someone with a name, a particular mode of contact and a set of topics or reasons as to why they are considered to be an expert (Figure: \ref{fig:expertsUmlClassModel}).
 
-Insert model here.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{experts-uml-class-model.png}
+	\label{fig:expertsUmlClassModel}
+	\caption{UML Class Diagram for Enabling Experts Queries}
+\end{figure}
 
-Same approaches as before with integration testing, creating adapter etc.
 
-Insert adapter diagram here.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\linewidth]{experts-wireframe.png}
+	\caption{Wireframe modelling of Experts presentation in IDE}
+	\label{fig:expertsWireframe}
+\end{figure}
+
+Without value, we skip explaining the approach to testing, good integration practises as well as providing an integration layer.
 
 \subsection{What are the alternative approaches to retrieving this data?}
 
-Search engine, manual navigation, plugins? git blame?
+The approaches to retrieving this are similar to those discussed in previous sections with the exception that some of the information mined here can be obtained by directly invoking Git's blame feature \footnote{\url{https://git-scm.com/docs/git-blame}}.
 
 \subsection{What are the improvements over the alternative?}
 
