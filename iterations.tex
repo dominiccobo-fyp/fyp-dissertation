@@ -406,6 +406,13 @@ We have performed all the necessary modelling when previously exploring our appr
 
 Using the same approach as initially defined for retrieving items, we leverage the Scatter Gather pattern which combined with the aggregator pattern enables these query results to be joined. We apply exactly the same integration testing approach and domain abstraction layer.
 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{abstraction-of-gitlab-workitems.png}
+	\caption{Abstraction of GitLab Work Items}
+	\label{fig:abstractionOfGitLabWorkItems}
+\end{figure}
+
 \subsection{What are the alternative approaches to retrieving this data?}
 
 The approach to retrieving Issues for GitLab is equally as lengthy as that of GitHub (Figure: \ref{fig:gitHubworkItemsRetrievalProcess}). This further highlights the time consuming nature if hypothetically one had to check both sites for issues.
@@ -429,7 +436,7 @@ In terms of the awful measurement of Lines of code, very simple. Difficulty wise
 
 \subsection{What are the key issues uncovered here?}
 
-As the number of components has grown, so has the complexity of starting up the server side.
+As the number of components has grown, so has the complexity of orchestrating installation and configuration of the server side components. 
 
 \section{Applying to Real Data - GitHub Experts}
 
@@ -447,11 +454,21 @@ People with expertise in a given domain, whether it be from documenting, coding,
 
 \subsection{Why GitHub?}
 
-Again, because it has a well defined API.
+We choose to rely on GitHub yet again because it has a well defined API.
 
 \subsection{What do we interpret as experts in GitHub?}
 
 Contributors as mined by GitHub and presented in their API.
+
+\subsection{How do we realise this integration?}
+
+Creation of model.
+
+Insert model here.
+
+Same approaches as before with integration testing, creating adapter etc.
+
+Insert adapter diagram here.
 
 \subsection{What are the alternative approaches to retrieving this data?}
 
@@ -497,21 +514,25 @@ Documentation is considered to be anything that illustrates how a system, compon
 
 Well referred to resource by developers for solving. Provides an open API that is easy to interact with.
 
-- What are the alternative approaches to retrieving this data.
+\subsection{What are the alternative approaches to retrieving this data?}
 
-- What are the improvements over this?
+\subsection{What are the improvements over this?}
 
 \section{Refining Presentation for Extensibility}
 
 - Why this step next?
 
-\subsection{What was wrong with the previous approach?}
+We have largely focused on the modularity of the server-side system, with little interest on the actual developed UI which as topics are added becomes increasingly more difficult to maintain and evolve.
 
 \subsection{What is the new approach?}
 
+Component driven web framework in replacement of jQuery. 
+
+Which framework though? React vs Angular vs Vue vs Polymer.
+
 \subsection{Does this new approach offer improvements?}
 
-Contributes to improved modularity.
+Yes! Contributes to improved modularity. Separation of concerns is far better improved, greater structure, assistance of angular scaffolding tools etc makes an enormous difference.
 
 %\input{iterations/sprint1.tex}
 %\input{iterations/sprint2.tex}
