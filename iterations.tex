@@ -486,19 +486,25 @@ Quicker to access.
 
 \section{Addressing real world performance issues}
 
-- Why is this the next step?
-
 Because the performance sucks seriously when retrieving repositories with large amounts of results to the extent that pagination doesn't appear to fix. It's an impediment to achieving multiple goals.
+
+There is noticeable performance hit when exploring the retrieval of work items from repositories, in particular GitHub, when there is a large number of repositories to retrieve even despite the usage of pagination. This performance issue risks compromising the goal of reducing the overall time taken to find relevant information for a given problem context.
 
 \subsection{What's the current performance?}
 
 Absolutely awful. Insert graph showing .4.0 0 performance of ~+30s for a large query.
 
-\subsection{How do we identify the choke points?}
+\subsection{How do we identify the bottlenecks?}
 
-Heuristically working from the provider of the data backwards.
+To identify the bottlenecks in our performance, we start by focusing on the slowest part of the processing chain: the retrieval from GitHub itself. We make the assumption that this will be the slowest based on the network distance travelled.
 
-Replaced use of API libraries with raw calls to remove caching for GitHub.
+Library first used does not offer very granular control over caching or pagination of results. So we replaced this with pure Spring based REST calls.
+
+Replacement of traditional object-oriented Java approach with a more streamlined use of Functional programming to remove any overhead of maintaining and creating application state.
+
+Within the Context Daemon, rather than directly retrieving the results directly from the initial HTTP REST call made from the IDE, we instead opt for a more structured approach.
+
+This involuntarily, but beneficially results in the adoption of a multiple-faceted buffer for the transfer of data across the system, allowing the system to cater for the varying speeds between its different components.
 
 Multiple buffer points. E.g. between IDE - Daemon - Resource - API.
 
