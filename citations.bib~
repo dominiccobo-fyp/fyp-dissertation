@@ -1,0 +1,70 @@
+@proceedings{Storey:2019:3341883,
+	address = {Piscataway, NJ, USA},
+	location = {Montreal, Quebec, Canada},
+	publisher = {IEEE Press},
+	title = {MSR '19: Proceedings of the 16th International Conference on Mining Software Repositories},
+	year = {2019}
+}
+
+@book{Sommerville:2010:SE:1841764,
+	address = {USA},
+	author = {Sommerville, Ian},
+	edition = {9th},
+	isbn = {0137035152, 9780137035151},
+	publisher = {Addison-Wesley Publishing Company},
+	title = {Software Engineering},
+	year = {2010}
+}
+
+@inproceedings{klemola2002modeling,
+	author = {Klemola, Tuomas and Rilling, Juergen},
+	booktitle = {Proceedings First IEEE International Conference on Cognitive Informatics},
+	organization = {IEEE},
+	pages = {329--336},
+	title = {Modeling comprehension processes in software development},
+	year = {2002}
+}
+
+@article{sweller1998cognitive,
+	author = {Sweller, John and {Van Merrienboer}, Jeroen JG and Paas, Fred GWC},
+	journal = {Educational psychology review},
+	number = {3},
+	pages = {251--296},
+	publisher = {Springer},
+	title = {Cognitive architecture and instructional design},
+	volume = {10},
+	year = {1998}
+}
+
+@book{miyake1999models,
+	author = {Miyake, Akira and Shah, Priti},
+	publisher = {Cambridge University Press},
+	title = {Models of working memory: Mechanisms of active maintenance and executive control},
+	year = {1999}
+}
+
+@book{kersten2018projecproduct,
+	author = {Kersten, Mik},
+	publisher = {IT Revolution Press},
+	title = {Project to Product: How to survive and thrive in the age of digital disruption with the flow framework},
+	year = {2018}
+}
+
+@online{lspGitHubSiteMSFT,
+	altauthor = {Microsoft},
+	date = {2019},
+	title = {Language Server Protocol},
+	url = {https://microsoft.github.io/language-server-protocol},
+	urldate = {2019-10-29}
+}
+
+@book{codeComplete,
+	address = {USA},
+	author = {McConnell, Steve},
+	chapter = {Chapter 30},
+	isbn = {0735619670},
+	publisher = {Microsoft Press},
+	title = {Code Complete, Second Edition},
+	year = {2004}
+}
+

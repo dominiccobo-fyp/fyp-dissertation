@@ -62,7 +62,7 @@ Having established, through thorough evaluation, a sound architecture, we procee
 		\label{fig:e2eMockTest}
 \end{figure}
 
-To achieve the functionality, we define a query object capable of transmitting the test payload. The query object also serves as the contract for those wishing the act on it based on its object signature. We model this process in Figure. Clients receive a query through an interface which they dispatch with context to the message bus and which is then returned from the appropriate source. 
+To achieve the functionality, we define a query object capable of transmitting the test payload. The query object also serves as the contract for those wishing to act on it based on its object signature. We model this process in Figure. Clients receive a query through an interface which they dispatch with context to the message bus and which is then returned from the appropriate source. 
 
 \begin{figure}[h!]
 	\centering
@@ -100,7 +100,7 @@ In the previous section, we successfully managed to establish a basic decoupled 
 
 We now explore the extension of our current solution in pursuit of the ability to connect it to an IDE. In this case, Visual Studio Code. 
 
-When thinking of creating reusable IDE Intelligence that can used to enrich context based on a given syntax and or grammar, we may consider the Language Server protocol. 
+When thinking of creating reusable IDE Intelligence to enrich context based on a given syntax and or grammar, we consider the Language Server protocol. 
 
 \begin{figure}[h!]
 	\centering
@@ -116,7 +116,7 @@ When thinking of creating reusable IDE Intelligence that can used to enrich cont
 	\caption{Minimum Viable Product Illustration for Push Approach}
 \end{figure}
 
-We may examine examples of its usage, such as Eclipse's Java LSP implementation, which uses the Eclipse Java Development Tools to provide Java support to all LSP supporting IDEs.
+Examining examples of its usage, such as Eclipse's Java LSP implementation, which uses the Eclipse Java Development Tools to provide Java support to all LSP supporting IDEs.
 
 \begin{figure}[h!]
 	
@@ -154,7 +154,7 @@ Replacing the ability to provide Java language suggestions as in the example wit
 
 
 
-\subsection{So how effective is this approach?}
+\subsection{How effective is this approach?}
 
 After demonstrating the resulting product of this sprint, we note that this approach suffers from multiple shortcomings.
 
@@ -162,11 +162,11 @@ It is visibly computationally expensive to constantly react and respond to each 
 
 Whilst difficult to orchestrate a test on the current performance, we can hypothesise on its effect. If a developer performs several actions such as clicking, highlighting and hovering in the course of 10 seconds, say 8 events, with each request triggered requiring ~1s to respond, that is a total of 8 seconds in which the client is stuck in a state of non responsiveness; this incurs an overall time of 18 seconds. Guidelines from \citeauthor{nielsen1994usability} (\citeyear{nielsen1994usability}) indicate this is sufficient to exceed the user's flow of thought. 
 
-Assessing against at our aim, whilst we have managed to enrich a our local scope with global context within the IDE, demonstrating sound feasibility, the latency, creates a natural impediment to usage. It also clearly violates our objective to reduce the overall time taken to find relevant information (Objective 1).
+Assessing against our goals, whilst we have managed to enrich the local scope with global context within the IDE, demonstrating sound feasibility, the latency, creates a natural impediment to usage. It also clearly violates our objective to reduce the overall time taken to find relevant information (Objective 1).
 
-These learnings suggest the trial of an alternative approach; adopting a command triggered pull-based model where the information is requested when needed.
+These learnings suggest the trial of an alternative approach; adopting a command triggered pull-based model where the information is requested when needed (Section \ref{sec:evaluatingPullModel}).
 
-\section{Connecting an IDE - Evaluating the Pull Model}
+\section{Connecting an IDE - Evaluating the Pull Model} \label{sec:evaluatingPullModel}
 
 With the performance and usability issues experienced through the push approach, implementing the Language Server Protocol, we resort to trialling a pull model (Figure \ref{fig:mvpPull}). A pull model implies that for the data to be displayed in the IDE, it must be explicitly requested.
 
@@ -199,7 +199,7 @@ Requiring the end user to request information, rather than barraging them with i
 	\label{fig:commonLSPEvents}
 \end{figure}
 
-To achieve this we need not scrap entirely what was done previously. Instead we conserve the architectural style, but drop the implementation of a language protocol in favour of a more bare-bones request-reply HTTP service displaying our results using simple web technology. By using HTML and Javascript, we are able to leverage web technologies to provide a simpler, richer interaction. 
+To achieve this we carry some principles forward from using LSP. Instead we conserve the architectural style, but drop the implementation of a language protocol in favour of a more bare-bones request-reply HTTP service displaying our results using simple web technology. By using HTML and Javascript, we are able to leverage web technologies to provide a simpler, richer interaction. 
 
 Web technologies can be leveraged for presentation throughout most of the common IDEs we have examined (Table \ref{table:webviewSupportByIDE}). This by nature means that we can reuse what we write, for our current instance of VSCode, across other IDEs.
 
@@ -307,8 +307,8 @@ As discussed, what are constituted as Work Items varies enormously according to 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.9\linewidth]{github-issues.png}
-	\label{fig:githubIssuesExample}
 	\caption{GitHub Issues Example}
+	\label{fig:githubIssuesExample}
 
 \end{figure}
 
@@ -332,8 +332,8 @@ We build on the evaluated, effective pull approach. This approach can be appreci
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\linewidth]{work-items-wireframe.png}
-	\label{fig:gitHubWorkItemsWireframe}
 	\caption{GitHub Work Items Results Wireframe}
+	\label{fig:gitHubWorkItemsWireframe}
 \end{figure}
 
 Using the approach discussed initially in Figure \ref{fig:e2eMockClass}, we must consider the ability to support the new notion of Work Items for queries and responses. Thus we elaborate models (Figure: \ref{fig:workItemsUMLModels}) to support these. In addition, to facilitate integration, we provide a contractual interface.
@@ -377,11 +377,7 @@ Yes, but why?
 
 Repeat manual approaches we conducted show the traditional approach taking a mean time of circa 42 seconds whereas with the implementation this is cut down to a mean time circa 12 seconds. 
 
-Could we use a box plot to show this?
-
-relate back to how this affects objective... 
-
-this is currently strong affected by the inability to perform observational studies because of COVID-19, consult tutor on how to proceed; we could just show own manual repetition as evaluation.
+Could we use a box plot to show this? Relate to how this affects.
 
 \section{Applying to Real Data - GitLab Work Items}
 
@@ -400,7 +396,7 @@ GitLab, just alike GitHub provides issues for documenting development work and s
 	\caption{Example of GitLab Issues Interaction}
 \end{figure}
 
-\subsection{How do we do this?}
+\subsection{Enabling the integration of Work Items}
 
 We have performed all the necessary modelling when previously exploring our approach with GitHub Issues as Work Items, and, as such only have the burden of providing the integration itself. This provides a good moment to explore the true difficulty of integrating new services with the existing system.
 
@@ -417,7 +413,7 @@ Using the same approach as initially defined for retrieving items, we leverage t
 
 The approach to retrieving Issues for GitLab is equally as lengthy as that of GitHub (Figure: \ref{fig:gitHubworkItemsRetrievalProcess}). This further highlights the time consuming nature if hypothetically one had to check both sites for issues.
 
-Another pattern that emerges is the necessity of a plugin per platform, which he hypothetically explored in the background section.
+Another pattern that emerges is the necessity of a plugin or more per platform, which he hypothetically explored in the background section.
 
 \subsection{Is this quicker than the alternative?}
 
@@ -436,11 +432,13 @@ In terms of the awful measurement of Lines of code, very simple. Difficulty wise
 
 \subsection{What are the key issues uncovered here?}
 
-As the number of components has grown, so has the complexity of orchestrating installation and configuration of the server side components. 
+As the number of components has grown, so has the complexity of orchestrating installation and configuration of the server side components. The previous utilisation of Docker Compose, reveals clear weaknesses. The gold-standard of container orchestration is seen as Kubernetes \parencite{kuberenetesOfficialSite}. Kubernetes is highly configurable, but allows for exact, immutable, replications of infrastructure per a declaration of the Infrastructure as Code.
+
+Packaging any application is a key challenge of facilitating development and, or distribution. Openshift \parencite{openshiftSite} and Helm \parencite{helmOnlineResource} each provide their own approach to packaging Kubernetes deployments. We choose Helm due to its closeness to vanilla Kubernetes and its ease of use. 
 
 \section{Applying to Real Data - GitHub Experts}
 
-We've proven the effectiveness and viability and effectiveness of the solution when applied to documenting Work Items. We must provide an expansion to the available motifs or topics to cater for a wider variety of typical developer queries.
+We've proven the effectiveness and viability of the solution when applied to documenting Work Items. We must provide an expansion to the available motifs or topics to cater for a wider variety of typical developer queries.
 
 
 % TODO: user stories add them here....
@@ -462,8 +460,8 @@ This is an entirely new topic or motif that does not exist as part of our modell
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1\linewidth]{experts-uml-class-model.png}
-	\label{fig:expertsUmlClassModel}
 	\caption{UML Class Diagram for Enabling Experts Queries}
+	\label{fig:expertsUmlClassModel}
 \end{figure}
 
 
@@ -486,8 +484,6 @@ Quicker to access.
 
 \section{Addressing real world performance issues}
 
-Because the performance sucks seriously when retrieving repositories with large amounts of results to the extent that pagination doesn't appear to fix. It's an impediment to achieving multiple goals.
-
 There is noticeable performance hit when exploring the retrieval of work items from repositories, in particular GitHub, when there is a large number of repositories to retrieve even despite the usage of pagination. This performance issue risks compromising the goal of reducing the overall time taken to find relevant information for a given problem context.
 
 \subsection{What's the current performance?}
@@ -498,15 +494,21 @@ Absolutely awful. Insert graph showing .4.0 0 performance of ~+30s for a large q
 
 To identify the bottlenecks in our performance, we start by focusing on the slowest part of the processing chain: the retrieval from GitHub itself. We make the assumption that this will be the slowest based on the network distance travelled.
 
-Library first used does not offer very granular control over caching or pagination of results. So we replaced this with pure Spring based REST calls.
+We first examine the integration point between the mining application and the data source itself; in our case, this is an existing third party GitHub API library. Through observation, we note that the control over caching and pagination lacks granularity, reducing our ability to fine tune. We replace this with pure Spring based REST HTTP calls, to enable finer control over our interaction with the data source.
 
-Replacement of traditional object-oriented Java approach with a more streamlined use of Functional programming to remove any overhead of maintaining and creating application state.
+The next step we focus on eliminating state from pipeline we have established. To do so, we revert from a traditional object-oriented approach towards a streamlined use of the Functional paradigm enabled by the Java Streams API.
 
-Within the Context Daemon, rather than directly retrieving the results directly from the initial HTTP REST call made from the IDE, we instead opt for a more structured approach.
 
-This involuntarily, but beneficially results in the adoption of a multiple-faceted buffer for the transfer of data across the system, allowing the system to cater for the varying speeds between its different components.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\linewidth]{ide-daemon-protocol-improved.png}
+	\caption{UML Sequence Diagram Illustrating client-side improvements}
+	\label{fig:ideDaemonProtocolImproved}
+\end{figure}
 
-Multiple buffer points. E.g. between IDE - Daemon - Resource - API.
+We then move to reducing the bottlenecks on the client-running applications. Within the Context Daemon, rather than supplying the results directly from the initial request from the IDE, we opt for a more structured approach with a slightly more complex protocol. This is done by substituting a response of the results in the initial request with a results aggregate identifier which can then be repeatedly queried in successive calls (Figure \ref{fig:ideDaemonProtocolImproved}).
+
+This beneficially results in the adoption of a multiple-faceted buffer for the transfer of data across the system, allowing the system to cater for the varying speeds between its different components.
 
 \subsection{Did we improve?}
 
@@ -514,51 +516,100 @@ Show graph showing 0.6.1 performance vs 0.4.0.
 
 \section{Applying to Real Data - Stack Overflow Documentation}
 
-- Why is this the next step?
+It is imperative to have one last form of common developer resource to illustrate and validate diverse application of the approach we are taking as well as explore any potential issues that may arise as a result of integrating multiple sources. Documentation in itself is a common action in almost any engineering discipline as complex domains require referential material to understand.
 
-Need to have one last form of common developer resource to illustrate and validate diverse application of the approach and explore any potential issues that may arise as a result of integrating multiple sources.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{stack-overflow-documentation.png}
+	\caption{Example of a Stack Overflow response}
+	\label{fig:stackOverflowDocSite}
+\end{figure}
 
 \subsection{What is documentation?}
 
-Documentation is considered to be anything that illustrates how a system, component, process or other works whether from an abstract point of view or concrete as may be code examples, test cases or questions and answers.
+Documentation is considered to be anything that illustrates how a system, component, process or other works whether from an abstract point of view or concrete as may be code examples, test cases - specification by example - or questions and answers.
+
+\subsection{Why Stack overflow?}
+
+It is entirely unfeasible to expect a developer to remember, or know how to use every system they interact with, or for that matter anyone to use anything of any complicated nature without reference to fall back to. Developer's often resort to Question-based sites to rapidly solve cases by example. Stack Overflow is a popular choice for this approach to problem solving; it exposes a limited use, well documented public API that we will use to demonstrate the effectiveness.
+
+\subsection{What are the alternative approaches to retrieving this data?}
+
+Generally, this approach to problem has multiple heuristic approaches; these include: copy-pasting lines of code, copying error messages, or even general keywords that are likely to return a result. 
+
+\subsection{The Implementation}
+
+Following the same good practise principles, such as integration testing, that we have for each integration of new motifs, we begin implementing support for the new motif of documentation and the exemplar source. 
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1\linewidth]{documentation-uml-model.png}
-	\label{fig:documentationUmlClass}
 	\caption{UML Class Diagram for Enabling Documentation Queries}
+	\label{fig:documentationUmlClass}
 \end{figure}
 
+Next, we extend the existing user-interface implementation to allow for documentation (Figure: \ref{fig:documentationWireframe}).
 
-\subsection{Why Stack overflow?}
-
-Well referred to resource by developers for solving. Provides an open API that is easy to interact with.
-
-\subsection{What are the alternative approaches to retrieving this data?}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{documentation-wireframe.png}
+	\caption{Documentation Wireframe}
+	\label{fig:documentationWireframe}
+\end{figure}
 
 \subsection{What are the improvements over this?}
 
+The results retrieving from forwarding certain code snippets directly to the StackOverflow API do not always return useful, entirely relevant results. We consider that these refinements are beyond the scope of the objectives set, given we merely aim to prove the possibility of these integration and not explore the intricacies of mining itself.
+
+However, the lack of relevant results from a single API, does not mean that the integration itself does not serve a purpose. Instead, we focus on evaluating the time taken to reach the same results through the traditional method and current method.
+
+To include measurements.
+
 \section{Refining Presentation for Extensibility}
 
-- Why this step next?
-
-We have largely focused on the modularity of the server-side system, with little interest on the actual developed UI which as topics are added becomes increasingly more difficult to maintain and evolve.
+We have largely focused on the modularity of the server-side system, and have emphasized little interest or importance on the developed user-interface, which as topics are added, becomes increasingly more difficult to maintain and evolve. This is opposite to our goal of a modular, easily extensible solution.
 
 \subsection{What is the new approach?}
 
-Component driven web framework in replacement of jQuery. 
+We have described Microservices as the solution to modularity, and all its benefits, in a distributed system. However, this does not account for the fact that ultimately users interact with a single user interface that is developed monolithic in itself. In recent years, Web Components, have grown to address the growing need to address the bottleneck faced in UI development. Component-driven development is now the norm in major web-frameworks (Figure: \ref{table:webFrameworkComponentSupport}).
 
-Which framework though? React vs Angular vs Vue vs Polymer.
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline 
+		Framework & Supports Components \\ 
+		\hline 
+		\hline 
+		Angular & Yes \\ 
+		\hline
+		ReactJS & Yes \\ 
+		\hline 
+		VueJS & Yes \\ 
+		\hline
+		Polymer & Yes \\ 
+		\hline  
+	\end{tabular} 
+	\caption{Web Frameworks and Support for Component-based Development}
+	\label{table:webFrameworkComponentSupport}
+\end{table}
+
+As a replacement for the raw jQuery and Ajax approach initially used to implement the technology, we opt for Angular. This decision is based on its well defined, CLI-scaffolded \footnote{Command Line Interface prompted assistance for creating / modifying applications} approach that offers a clean, intuitive development for web applications.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{modular-ui.png}
+	\caption{Component Diagram Illustrating Modular UI}
+	\label{fig:modularUIComponentDiagram}
+\end{figure}
+
+
+We must consider the need to cleanly interface with the events and requests from  any IDE as well as provide a clean separation of concerns for each type of data we display so that each is entirely independent from another. We can achieve this by providing an abstraction layer within the Web View that is capable of translating events from the varying different extension hosts to the Web View - generally through IPC \footnote{Inter Process Communication - View and Host are independent processes}. For each integration type, a component is developed an allocated (Figure: \ref{fig:modularUIComponentDiagram}). 
+
 
 \subsection{Does this new approach offer improvements?}
 
-Yes! Contributes to improved modularity. Separation of concerns is far better improved, greater structure, assistance of angular scaffolding tools etc makes an enormous difference.
+With this approach, the overall coupling is between components is reduced as well as the cohesiveness increased. This is difficult to measure with existing tools given the enormous difference between both implementations used, however can easily be explored with sound reasoning. 
 
-%\input{iterations/sprint1.tex}
-%\input{iterations/sprint2.tex}
-%\input{iterations/sprint3.tex}
-%\input{iterations/sprint4.tex}
-%\input{iterations/sprint5.tex}
-%\input{iterations/sprint6.tex}
-%\input{iterations/sprint7.tex}
-%\input{iterations/sprint8.tex}
+\chapter{Evaluation}
+
+Conclude with what are the overall objectives reached. 
