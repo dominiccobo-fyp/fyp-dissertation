@@ -41,13 +41,13 @@ The JVM and its associated languages, are ubiquitous in back office systems in m
 
 Spring itself does not however dictate the style of distributed programming but offers a strongly opinionated view on the approaches available. We chose the Command Query Responsibility Segregation (CQRS) approach based on its focus on separation of updating a set of projections - query models - and updating of a central decoupled model - command models. Implementing this pattern is infamously difficult, but with help of an extension based on Spring - Axon Framework - can we reduce much of this effort.  
 
-With the choice of Axon come some beneficial consequences. The framework provides a strongly opinionated view of what is best for the developer; its strong point lays in its approach to Messaging. It defines its own Message Bus implementation - which can be substituted from a set of other choices if needed - as well as handling all of the boiler-plating that would otherwise be needed to glue message endpoint consumption together.
+With the choice of Axon come some beneficial consequences. The framework provides a strongly opinionated view of what is best for the developer; its strong point lays in its approach to Messaging. It defines its own Message Bus implementation - which can be substituted from a set of other choices if needed - as well as handling all of the boiler-plating that would otherwise be needed to glue message endpoint consumption together (Figure: \ref{fig:distributed-approach-with-axon}).
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=1\linewidth]{distributed-approach-with-axon.png}
 	\caption{Component Diagram Illustrating Distributed Approach with Axon Framework}
-	\label{fig:distributed-approach}
+	\label{fig:distributed-approach-with-axon}
 \end{figure}
 
 \section{Establishing a Retrieval Mechanism}
@@ -80,7 +80,7 @@ To achieve the functionality, we define a query object capable of transmitting t
 
 By implementing this approach, we end up with a core code example of what will form the implementation pattern throughout this project (Figure \ref{fig:e2eMockClass}). The simplicity of this approach is evident and strongly contributes to our goal of ease of extensibility. The complexity of deploying this distributed application is handled through the use of containerisation - Docker - and container orchestration - Docker Compose. 
 
-Despite not performing much processing, the response times indicate a positive approach to reducing the time taken to retrieve information.
+Despite not performing much processing, the response times indicate a positive approach to reducing the time taken to retrieve information. 
 
 % TODO: insert graph here.
 
@@ -517,7 +517,7 @@ To evaluate the improvements, similar to the case of work items, we set up an ex
 	\label{fig:time-to-retrieve-experts-gh-boxplot}
 \end{figure}
 
-Observing the above results we can see, yet again, that our solution performs significantly better in comparison to the traditional approach. However, is beaten by commands provided by the version control tool. We note that the approach to obtain the same information from the version control tool has a far steeper learning curve, so this must be considered.
+Observing the above results we can see, yet again, that our solution performs significantly better in comparison to the traditional approach. However, is beaten by commands provided by the version control tool. We note that the approach to obtain the same information from the version control tool has a far steeper learning curve, so this must be considered. Our solution, still provides the consistent, access that we established without the need to understand or learn the intricacies of more tools.
 
 \section{Addressing real world performance issues}
 
@@ -614,7 +614,7 @@ To carry out a measurement of this, we orchestrate a simple experiment. The expe
 	\label{fig:time-to-retrieve-documentation}
 \end{figure}
 
-%TODO;
+From the box plot (Figure \ref{fig:time-to-retrieve-documentation}), it is visible that in the worst, best and median scenarios, the implemented solution, provides a consistently better approach.
 
 \section{Refining Presentation for Extensibility}
 
@@ -658,10 +658,28 @@ We must consider the need to cleanly interface with the events and requests from
 
 \subsection{Does this new approach offer improvements?}
 
-With this approach, the overall coupling between components is reduced as well as the cohesiveness increased. This is difficult to measure with existing tools given the enormous difference between both implementations used, however can easily be explored with sound reasoning. 
+With this approach, the overall coupling between components is reduced as well as the cohesiveness increased. This is difficult to measure with existing tools given the enormous difference between both implementations used, however, this does not prevent a contrast being drawn.
 
-%TODO:
+Before, to implement new topic in jQuery, the implementation required the creation of several new functions to manipulate the DOM\footnote{Document Object Model - The way web documents are structured} and retrieve new data, in an error prone, confusing approach requiring extensive knowledge of the code base.
 
-\chapter{Evaluation}
+In the new approach, the new implementation of support for a new topic, can be accelerated through the usage a scaffolding command and subsequent configuration of the component created through this command.
 
-To summarise, we proceed to draw together the conclusions. 
+\section{Concluding the Implementation Efforts}
+
+The evaluative efforts, throughout these iterations, have focused on three core areas: ease of extensibility for both input and presentation, improvements in task performance and general usability; these core areas are directly related to the goals and vision established.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{median-improvements-in-task-time}
+	\caption{Median improvements in task time throughout integrations}
+	\label{fig:median-improvements-in-task-time}
+\end{figure}
+
+
+For the improvements in time taken to perform a task, we note that, our solution throughout consistently provides circa two-times reduction in the median time taken compared to traditional solution (Figure: \ref{fig:median-improvements-in-task-time}). This is consistent towards our goal to reduce the overall time taken to find relevant information for a given context.
+
+When establishing the initial functionality of the IDE, we contrasted the difference between push and pull approaches, showing the appropriateness of a pull approach; we noted this as a result of the unavoidable performance consequences of a high request rate that were inherent as a result of a push approach. 
+
+On the subject of extensibility wise, we demonstrated the creation and integration of three different motifs and the ease of which this can be accomplished. We noted the extensibility bottleneck that was the user-interface, providing an improved modular solution where new sources can easily be integrated. Through the adoption of web technology standards, with exploration of the compatible IDEs, we have shown the transferability between IDEs of the solution.
+
+We show, through thorough exploration of assumptions, our testing approach which facilitated the development of the solution through Test Driven Development. Providing an antiquated test-table of these granular tests would prove daunting and thus the source and test code is included as appendix material (Section \ref{projectAssets})
