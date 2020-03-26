@@ -156,9 +156,7 @@ Replacing the ability to provide Java language suggestions as in the example wit
 
 \subsection{How effective is this approach?}
 
-After demonstrating the resulting product of this sprint, we note that this approach suffers from multiple shortcomings.
-
-It is visibly computationally expensive to constantly react and respond to each IDE action to provide the necessary global context data. The latency taken to resolve this, running locally and with mocked data, suggests this approach as being non-viable. 
+We note that this approach suffers from multiple shortcomings. It is visibly computationally expensive to constantly react and respond to each IDE action to provide the necessary global context data. The latency taken to resolve this, running locally and with mocked data, suggests this approach as being non-viable. 
 
 Whilst difficult to orchestrate a test on the current performance, we can hypothesise on its effect. If a developer performs several actions such as clicking, highlighting and hovering in the course of 10 seconds, say 8 events, with each request triggered requiring ~1s to respond, that is a total of 8 seconds in which the client is stuck in a state of non responsiveness; this incurs an overall time of 18 seconds. Guidelines from \citeauthor{nielsen1994usability} (\citeyear{nielsen1994usability}) indicate this is sufficient to exceed the user's flow of thought. 
 
@@ -373,11 +371,16 @@ Last we need to enable support in the daemon to perform this query as well as th
 
 \subsection{Is this quicker than retrieving the work items manually?}
 
-Yes, but why?
+To measure the effectiveness, we set up a brief experiment. We establish an input of several work item topics that must be explored in order to aid solving a problem. We then time the time taken to locate relevant information via the traditional and our implemented approach.
 
-Repeat manual approaches we conducted show the traditional approach taking a mean time of circa 42 seconds whereas with the implementation this is cut down to a mean time circa 12 seconds. 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{time-taken-to-retrieve-workitems-gh-boxplot}
+	\caption{Graph illustrating time taken to retrieve work items from GitHub via two methods}
+	\label{fig:time-taken-to-retrieve-workitems-gh-boxplot}
+\end{figure}
 
-Could we use a box plot to show this? Relate to how this affects.
+From the plotted graph (Figure: \ref{fig:time-taken-to-retrieve-workitems-gh-boxplot}), we note two key differences. First, the time taken to retrieve work items via the traditional approach, varies vastly whilst the retrieval of work items via our implemented approach shows significant less spread and thus more consistency. Second, the new approach is visibly, approximately 2 times on average, faster when compared to the traditional approach. 
 
 \section{Applying to Real Data - GitLab Work Items}
 
@@ -417,7 +420,32 @@ Another pattern that emerges is the necessity of a plugin or more per platform, 
 
 \subsection{Is this quicker than the alternative?}
 
-Yes, but why?
+To evaluate whether the improvements are applicable across multiple sources, we orchestrate the same experiment as we did to measure the effect our efforts had on the retrieval of work items from GitHub. We then proceed to plot these on a box plot for comparison (Figure: \ref{fig:time-to-retrieve-work-items-gl-boxplot}).
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{time-to-retrieve-work-items-gl-boxplot}
+	\caption{Time taken to retrieve Work Items from GitLab using traditional vs our approach}
+	\label{fig:time-to-retrieve-work-items-gl-boxplot}
+\end{figure}
+
+The first thing that immediately noticeable is the spread of times (range 35) is far greater in comparison to that of GitHub (range 30) when using the traditional approach. The higher median times are likely indicative on a difference in indexing and user interfaces when accessing the page directly versus its indexed result in search engines. GitHub, for example, provides easy access to projects from its landing page, whereas GitLab, this is not as explicit (Figure \ref{fig:comparisonOfLandingPagesForGhVsGL}).
+
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+		\includegraphics[width=1\linewidth]{github-landing-page.png}
+		\caption{GitHub}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+		\includegraphics[width=1\linewidth]{gitlab-landing-page.png}
+		\caption{GitLab}
+	\end{subfigure}
+	\caption{Comparison of Landing Pages}
+	\label{fig:comparisonOfLandingPagesForGhVsGL}
+\end{figure}
+
+Not withstanding the differences in time for the traditional approach we note that appearance that the effectiveness of our solution is transferable across sources, with a median for both of 18 seconds to retrieve the needed information.
 
 \subsection{How simple is integrating other sources?}
 
@@ -476,21 +504,26 @@ Without value, we skip explaining the approach to testing, good integration prac
 
 \subsection{What are the alternative approaches to retrieving this data?}
 
-The approaches to retrieving this are similar to those discussed in previous sections with the exception that some of the information mined here can be obtained by directly invoking Git's blame feature \footnote{\url{https://git-scm.com/docs/git-blame}}.
+The approaches to retrieving this are similar to those discussed in previous sections with the exception that some of the information mined here can be obtained by directly invoking Git's blame feature \footnote{\url{https://git-scm.com/docs/git-blame}} or Git's Shortlog command.
 
 \subsection{What are the improvements over the alternative?}
 
-Quicker to access.
+To evaluate the improvements, similar to the case of work items, we set up an experiment to measure the time taken to retrieve experts for a particular project. We measure this time for retrieving experts via the traditional search engine or direct access, git blame or shortlog command, and our solution. We then plot these results using a box plot to illustrate the distribution (Figure: \ref{fig:time-to-retrieve-experts-gh-boxplot}).
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{time-to-retrieve-experts-gh-boxplot}
+	\caption{Comparison of time taken to retrieve experts for a particular project via our solution, traditional approach and git commands}
+	\label{fig:time-to-retrieve-experts-gh-boxplot}
+\end{figure}
+
+Observing the above results we can see, yet again, that our solution performs significantly better in comparison to the traditional approach. However, is beaten by commands provided by the version control tool. We note that the approach to obtain the same information from the version control tool has a far steeper learning curve, so this must be considered.
 
 \section{Addressing real world performance issues}
 
-There is noticeable performance hit when exploring the retrieval of work items from repositories, in particular GitHub, when there is a large number of repositories to retrieve even despite the usage of pagination. This performance issue risks compromising the goal of reducing the overall time taken to find relevant information for a given problem context.
+There is noticeable performance hit when exploring the retrieval of work items from repositories, in particular GitHub, when there is a large number of repositories to retrieve even despite the usage of pagination. This performance issue risks compromising the goal of reducing the overall time taken to find relevant information for a given problem context. This issue was not uncovered in testing as the test repositories were not of great size.
 
-\subsection{What's the current performance?}
-
-Absolutely awful. Insert graph showing .4.0 0 performance of ~+30s for a large query.
-
-\subsection{How do we identify the bottlenecks?}
+\subsection{How do we identify and remove the bottlenecks?}
 
 To identify the bottlenecks in our performance, we start by focusing on the slowest part of the processing chain: the retrieval from GitHub itself. We make the assumption that this will be the slowest based on the network distance travelled.
 
@@ -510,9 +543,18 @@ We then move to reducing the bottlenecks on the client-running applications. Wit
 
 This beneficially results in the adoption of a multiple-faceted buffer for the transfer of data across the system, allowing the system to cater for the varying speeds between its different components.
 
-\subsection{Did we improve?}
+\subsection{Did these changes offer improvement?}
 
-Show graph showing 0.6.1 performance vs 0.4.0.
+To orchestrate an experiment, we take the two artefacts which have been modified to improve the performance, at a state before the changes were made and after the improvements were made. We then orchestrate a repeated test, through a Python script that repeats a retrieval 50 times, recording the time taken each time. We then plot this on a boxplot to show the distribution of the results (Figure \ref{fig:time-taken-to-display-first-result})
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{time-taken-to-display-first-result}
+	\caption{Comparison of time taken to display first result before and after improvements made}
+	\label{fig:time-taken-to-display-first-result}
+\end{figure}
+
+Examining the results, we note the extremely rapid and consistent retrieval time obtained by the improvements, in which a sub-second retrieval time is appreciable. This is consistent with the UX requirements explored before.
 
 \section{Applying to Real Data - Stack Overflow Documentation}
 
@@ -563,7 +605,16 @@ The results retrieving from forwarding certain code snippets directly to the Sta
 
 However, the lack of relevant results from a single API, does not mean that the integration itself does not serve a purpose. Instead, we focus on evaluating the time taken to reach the same results through the traditional method and current method.
 
-To include measurements.
+To carry out a measurement of this, we orchestrate a simple experiment. The experiment consists in searching for examples that are relevant to a context by searching for code and comments that we highlight in our IDE. We repeat the experiment using our implemented approach and then using the traditional means through a search engine and time the time taken to obtain results.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{time-to-retrieve-documentation}
+	\caption{Comparison of time taken to retrieve documentation for implemented solution vs traditional approach}
+	\label{fig:time-to-retrieve-documentation}
+\end{figure}
+
+%TODO;
 
 \section{Refining Presentation for Extensibility}
 
@@ -605,11 +656,12 @@ As a replacement for the raw jQuery and Ajax approach initially used to implemen
 
 We must consider the need to cleanly interface with the events and requests from  any IDE as well as provide a clean separation of concerns for each type of data we display so that each is entirely independent from another. We can achieve this by providing an abstraction layer within the Web View that is capable of translating events from the varying different extension hosts to the Web View - generally through IPC \footnote{Inter Process Communication - View and Host are independent processes}. For each integration type, a component is developed an allocated (Figure: \ref{fig:modularUIComponentDiagram}). 
 
-
 \subsection{Does this new approach offer improvements?}
 
-With this approach, the overall coupling is between components is reduced as well as the cohesiveness increased. This is difficult to measure with existing tools given the enormous difference between both implementations used, however can easily be explored with sound reasoning. 
+With this approach, the overall coupling between components is reduced as well as the cohesiveness increased. This is difficult to measure with existing tools given the enormous difference between both implementations used, however can easily be explored with sound reasoning. 
+
+%TODO:
 
 \chapter{Evaluation}
 
-Conclude with what are the overall objectives reached. 
+To summarise, we proceed to draw together the conclusions. 
