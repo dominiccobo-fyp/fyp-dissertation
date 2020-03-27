@@ -517,11 +517,11 @@ To evaluate the improvements, similar to the case of work items, we set up an ex
 	\label{fig:time-to-retrieve-experts-gh-boxplot}
 \end{figure}
 
-Observing the above results we can see, yet again, that our solution performs significantly better in comparison to the traditional approach. However, is beaten by commands provided by the version control tool. We note that the approach to obtain the same information from the version control tool has a far steeper learning curve, so this must be considered. Our solution, still provides the consistent, access that we established without the need to understand or learn the intricacies of more tools.
+Observing the above results we can see, yet again, that our solution performs significantly better in comparison to the traditional approach. However, this is beaten by commands provided by the version control tool. We note that the approach to obtain the same information from the version control tool has a far steeper learning curve, so this must be considered. Our solution, still provides the consistent access that we established without the need to understand or learn the intricacies of more tools.
 
 \section{Addressing real world performance issues}
 
-There is noticeable performance hit when exploring the retrieval of work items from repositories, in particular GitHub, when there is a large number of repositories to retrieve even despite the usage of pagination. This performance issue risks compromising the goal of reducing the overall time taken to find relevant information for a given problem context. This issue was not uncovered in testing as the test repositories were not of great size.
+There is noticeable performance hit when exploring the retrieval of work items from repositories, in particular GitHub, when there is a large number of repositories to retrieve even despite the usage of pagination. This performance issue risks compromising the goal of reducing the overall time taken to find relevant information for a given problem context. This issue was not uncovered in testing as the test repositories were of small activity counts for testing purposes. 
 
 \subsection{How do we identify and remove the bottlenecks?}
 
@@ -554,7 +554,7 @@ To orchestrate an experiment, we take the two artefacts which have been modified
 	\label{fig:time-taken-to-display-first-result}
 \end{figure}
 
-Examining the results, we note the extremely rapid and consistent retrieval time obtained by the improvements, in which a sub-second retrieval time is appreciable. This is consistent with the UX requirements explored before.
+Examining the results, we note the extremely rapid and consistent retrieval time obtained by the improvements where sub-second retrieval times are appreciable. This is consistent with the UX requirements explored before. 
 
 \section{Applying to Real Data - Stack Overflow Documentation}
 
@@ -603,9 +603,9 @@ Next, we extend the existing user-interface implementation to allow for document
 
 The results retrieving from forwarding certain code snippets directly to the StackOverflow API do not always return useful, entirely relevant results. We consider that these refinements are beyond the scope of the objectives set, given we merely aim to prove the possibility of these integration and not explore the intricacies of mining itself.
 
-However, the lack of relevant results from a single API, does not mean that the integration itself does not serve a purpose. Instead, we focus on evaluating the time taken to reach the same results through the traditional method and current method.
+However, the lack of relevant results from a single API does not mean that the integration itself does not serve a purpose. Instead, we focus on evaluating the time taken to reach the same results through the traditional method and current method.
 
-To carry out a measurement of this, we orchestrate a simple experiment. The experiment consists in searching for examples that are relevant to a context by searching for code and comments that we highlight in our IDE. We repeat the experiment using our implemented approach and then using the traditional means through a search engine and time the time taken to obtain results.
+To carry out a measurement of this, we orchestrate a simple experiment. The experiment consists in searching for examples that are relevant to a context by searching for code and comments that we highlight in our IDE. We repeat the experiment using our implemented approach and then using the traditional means through a search engine and measure the time taken to obtain results.
 
 \begin{figure}[h]
 	\centering
@@ -666,7 +666,7 @@ In the new approach, the new implementation of support for a new topic, can be a
 
 \section{Concluding the Implementation Efforts}
 
-The evaluative efforts, throughout these iterations, have focused on three core areas: ease of extensibility for both input and presentation, improvements in task performance and general usability; these core areas are directly related to the goals and vision established.
+The granular evaluations, throughout these iterations, have focused on three core areas: ease of extensibility for both input and presentation, improvements in task performance and general usability; these core areas are directly related to the goals and vision established.
 
 \begin{figure}[h!]
 	\centering
@@ -680,6 +680,6 @@ For the improvements in time taken to perform a task, we note that, our solution
 
 When establishing the initial functionality of the IDE, we contrasted the difference between push and pull approaches, showing the appropriateness of a pull approach; we noted this as a result of the unavoidable performance consequences of a high request rate that were inherent as a result of a push approach. 
 
-On the subject of extensibility wise, we demonstrated the creation and integration of three different motifs and the ease of which this can be accomplished. We noted the extensibility bottleneck that was the user-interface, providing an improved modular solution where new sources can easily be integrated. Through the adoption of web technology standards, with exploration of the compatible IDEs, we have shown the transferability between IDEs of the solution.
+On the subject of extensibility, we demonstrated the creation and integration of three different motifs and the ease of which this can be accomplished. We noted the extensibility bottleneck that was the user-interface, providing an improved modular solution where new sources can easily be integrated. Through the adoption of web technology standards, with exploration of the compatible IDEs, we have shown how this solution can be easily transferred between IDEs.
 
 We show, through thorough exploration of assumptions, our testing approach which facilitated the development of the solution through Test Driven Development. Providing an antiquated test-table of these granular tests would prove daunting and thus the source and test code is included as appendix material (Section \ref{projectAssets})

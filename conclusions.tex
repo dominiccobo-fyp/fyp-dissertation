@@ -9,7 +9,7 @@ To understand what has been done and where, we draw a conclusive map of the impl
 \begin{table}[h!]
 \centering
 \small
-	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\begin{tabular}{|p{6cm}|c|c|c|c|c|c|}
 		\hline 
 		& Goal 1 & Goal 1a & Goal 2 & Goal 3 & Goal 4 & Goal 5 \\ 
 		\hline 
@@ -17,27 +17,27 @@ To understand what has been done and where, we draw a conclusive map of the impl
 		\hline 
 		\multicolumn{7}{|c|}{Chapter 4} \\ 
 		\hline 
-		Iteration 1 &  & X & X & X &  &  \\ 
+		Iteration 1 - Architectural Plumbing &  & X & X & X &  &  \\ 
 		\hline 	
-		Iteration 2 &  & X & X & X &  &  \\ 
+		Iteration 2 - Retrieval Mechanism &  & X & X & X &  &  \\ 
 		\hline 	
-		Iteration 3 & X &  &  &  &  & X \\ 
+		Iteration 3 - Push Approach & X &  &  &  &  & X \\ 
 		\hline 
-		Iteration 4 & X &  &  &  & X & X \\ 
+		Iteration 4 - Pull Approach & X &  &  &  & X & X \\ 
 		\hline 
-		Iteration 5 & X &  & X &  &  &  \\ 
+		Iteration 5 - Modelling Developer Context & X &  & X &  & &  \\ 
 		\hline 
-		Iteration 6 & X &  &  &  &  &  \\ 
+		Iteration 6 - GitHub Work Items & X & X &  &  & X &  \\ 
 		\hline 
-		Iteration 7 & X & X &  &  &  &  \\ 
+		Iteration 7 - GitLab Work Items & X & X &  &  & X &  \\ 
 		\hline 
-		Iteration 8 & X & X &  &  &  &  \\ 
+		Iteration 8 - GitHub Experts & X & X &  &  & X &  \\ 
 		\hline 
-		Iteration 9 &  & X &  &  & X &  \\ 
+		Iteration 9 - Performance Bottlenecks &  & X &  &  & X &  \\ 
 		\hline 
-		Iteration 10 & X & X &  &  &  &  \\ 
+		Iteration 10 - StackOverflow Documentation & X & X &  &  & X &  \\ 
 		\hline 
-		Iteration 11 &  &  & X &  &  &  \\ 
+		Iteration 11 - UI Modularity &  &  & X & X &  &  \\ 
 		\hline 
 	\end{tabular} 
 	\caption{Matrix of goals and where they are addressed}
@@ -50,15 +50,13 @@ To understand what has been done and where, we draw a conclusive map of the impl
 	\caption{Legend of Objectives}
 \end{figure}
 
-% This is where you draw your final conclusions. You have presented your findings or data, now summarise how you have met each objective, and draw a conclusion as to whether you have met your overall aim.  You should provide some justification for this.  There are three possibilities here:
+Through the distribution of these efforts it is visible that, despite the granularity of the tasks, there has been a strong interdependency amongst iterations, each providing their little attribution to the overall vision. 
 
-%1. You have completely met your aim, and solved your problem (unlikely)
-%2.  Your results show that your solution does not solve the problem at all (unlikely)
-%3. You conclude that your solution addresses your problem to some extent, but that there are weaknesses in the approach in other regards (most likely)
+We note a dominant coverage, supported in the evaluation, to efforts associated with reducing the time taken to retrieve relevant information for a given problem context (Goal \#4). This dominance is also displayed in towards the goal of providing aggregated information based on a relevant context for multiple topics (Goal \#1). 
 
-%In each case, you will have produced a valid result, and each of these is equally valuable when it comes to grading your work.
+Throughout the ample provisioning of new topics, information sources and evaluation of the modularity do we show ease of extending this solution (Goal \#2). We further illustrate the applicability of this solution across multiple different integration points (Goal \#3). We have managed to successfully contrast the two retrieval mechanisms, highlighting both the usability and the performance implications of each (Goal \#5).
 
-%What is less valuable is drawing the conclusion that you have solved all the problems with only weak justification.
+Whilst there has been coverage, it would be untrue to state that the solution itself is ideal; what has been achieved merely demonstrates the superficial feasibility of the project. No software project is ever finished. We have only shown the integration of well-documented sources in lieu of being able to source out-of-the-box tools from academia. Neither have we been able to certify the ecological validity of our findings due to circumstances outside our control.
 
 \section{Future Work}
 
@@ -66,7 +64,7 @@ As with every product, that is more than just a product, there is always an ongo
 
 \subsection{Addressing the Language Support Conundrum}
 
-Throughout this project we have based our approach on the Microservices distributed paradigm, yet through rapid choice of a framework to assist productivity and provide a clear, easy integration, have we overlooked the necessity to support multiple languages.
+Throughout this project we have based our approach on the Microservices distributed computing paradigm, yet through rapid choice of a framework to assist productivity and provide a clear, easy integration, have we overlooked the necessity to support multiple languages.
 
 Scripting languages are strongly preferred for data-science and mining purposes. Our choice of Axon constrains us to JVM languages which ultimately reduces the language choice to Groovy for scripting. However, R and Python are also popular in this field and are naturally not supported for execution on the JVM. 
 

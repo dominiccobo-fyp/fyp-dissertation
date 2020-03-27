@@ -2,6 +2,8 @@
 
 \section{Appendix A - Personal Reflection}
 
+%TODO:
+
 Reflect on project
 
 Consider specific knowledge in the area
@@ -15,10 +17,45 @@ what would have been done differently next time.
 \section{Appendix B - Notes on Project Infrastructure}
 \label{projectAssets}
 
-The project itself is hosted in its own self-contained Organisation on GitHub:
+The project itself is hosted in its own self-contained Organisation on GitHub: \url{https://github.com/dominiccobo-fyp}. See Table \ref{table:artefactsInProject} for information on its components.
 
-\url{https://github.com/dominiccobo-fyp}
+The build process is orchestrated through a Travis CI instance, which builds automatically on each committed push, creating the relevant artefact (Docker, NPM, VSIX and Java Jar) and publishing these within the GitHub Packages repository.
 
-Instructions on installing the project for demo purposes can be found in the documentation:
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|p{8cm}|}
+	\hline 
+	Artifact Name & Description \\ 
+	\hline 
+	build-common & Contains common build script and artefact repository configuration \\ 
+	\hline 
+	github-processing-utils & Contains reusable logic for GitHub based mining repositories \\ 
+	\hline 
+	gitlab-workitems-resolver & Contains source code for integration of GitLab Work Items  \\ 
+	\hline 
+	github-workitems-resolver & Contains source code for integration of GitHub Work Items \\ 
+	\hline 
+	github-experts-resolver & Contains source code for integration of Github Experts \\ 
+	\hline 
+	context-api & Contains API shared amongst all components of the system \\ 
+	\hline 
+	context-language-server & Contains source code for client daemon that enables connection between IDE and context resolvers \\ 
+	\hline 
+	stack-exchange-documentation-resolver & Contains source code for integration of Stackoverflow Documentation Items \\ 
+	\hline 
+	vscode-command-extension & Contains VSCode Integration and Angular WebView source code \\ 
+	\hline 
+	docs & Contains live version of the documentation for installing, and extending system. \\ 
+	\hline 
+	example-repo-a b & Sample repositories for testing against \\ 
+	\hline 
+	Infrastructure & Contains infrastructure as code for deploying system via helm to a Kubernetes node \\ 
+	\hline 
+	fyp-dissertation & Contains the source code to this document \\ 
+	\hline 
+\end{tabular} 
+\caption{Table containing list of artefacts produced}
+\label{table:artefactsInProject}
+\end{table}
 
-\url{https://dominiccobo-fyp.github.io/docs/}.
+Instructions on installing the project for demo purposes can be found in the documentation \url{https://dominiccobo-fyp.github.io/docs/}.
