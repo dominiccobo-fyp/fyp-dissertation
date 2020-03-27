@@ -117,28 +117,6 @@ Examining previous reports in this series, it is interesting to see a conversion
 
 Discerning the only numerical difference do we note an enormity in the number of extensions available for each; an indication that may be interpreted as easier extensibility.
 
-% TODO: insert these as footnote references ...
-
-% https://marketplace.visualstudio.com/search?target=VSCode\&category=All\%20categories&sortBy=Installs
-
-% https://plugins.jetbrains.com/
-
-
-% https://marketplace.eclipse.org/
-
-% https://www.jetbrains.com/company/
-
-% https://archive.eclipse.org/eclipse/downloads/drops/R-1.0-200111070001/
-
-% https://github.com/microsoft/vscode/commits/master
-
-% https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/creating_plugin_project.html
-
-% https://code.visualstudio.com/api
-
-% https://www.eclipse.org/pde/
-
-
 \begin{table}[h!]
 \centering
 \begin{tabular}{|l|l|l|c|l|}
@@ -156,11 +134,11 @@ Discerning the only numerical difference do we note an enormity in the number of
 \caption{Comparison of IDE and their extensions}
 \end{table}
 
-This difference in language and integration approaches inherently means that functionality implemented in one IDE cannot be reused across another. Interestingly, we may note that even despite Eclipse IDE and JetBrains IntelliJ using the same language, even together they do not reach half the extensions available for Visual Studio Code.
+This difference in language and integration approaches inherently means that functionality implemented in one IDE cannot be reused across another. Interestingly, we may note that even despite Eclipse IDE and JetBrains IntelliJ using the same language, even together they do not reach half the extensions available for Visual Studio Code \footnote{See Section \ref{notesOnIDE} }.
 
 \subsection{Are there any similar issues?}
 
-The logic compatibility matrix issue is not an unexplored issue in the domain of IDEs and RTEs. In the not too distant past, each environment had a programming language which it primarily focused on addressing, where other support was either lacking or implemented to a less full degree. 
+The logic compatibility matrix issue is not unexplored in the domain of IDEs and RTEs. In the not too distant past, each environment had a programming language which it primarily focused on addressing, where other support was either lacking or implemented to a less full degree. 
 
 This is known as the M x N language compatibility issue. For each environment, M, there exists the requirement to implement support for N given languages. Inherently, this results in the reinvention and, or reimplementation of the wheel for an identical requirement bar the functional presentation and interaction.
 
@@ -189,9 +167,7 @@ LSP provides a slim-lined model for solving the M x N language compatibility iss
 
 Recent advances in web technology have led to an enormous transition from desktop application technology towards web technology. 
 
-%TODO : add footnotes.
-
-Eclipse Che, Cloud 9, Visual Studio Code Online and others have popped up in recent years. This direction in development of coding environments, highlights a potential following of the trend in general application development; the user-interfaces, or presentation layers, are increasingly becoming stripped of logic in favour of a more thin approach. 
+Eclipse Che \parencite{eclipseChe}, Cloud 9 \parencite{amazonCloud9}, Visual Studio Code Online \parencite{vsCodeOnline} and others have popped up in recent years. This direction in development of coding environments, highlights a potential following of the trend in general application development; the user-interfaces, or presentation layers, are increasingly becoming stripped of logic in favour of a more thin approach. 
 
 \subsection{On surfacing associated information}
 

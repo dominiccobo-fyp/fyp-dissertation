@@ -13,8 +13,6 @@ To understand what has been done and where, we draw a conclusive map of the impl
 		\hline 
 		& Goal 1 & Goal 1a & Goal 2 & Goal 3 & Goal 4 & Goal 5 \\ 
 		\hline 
-		Chapter 2 &  &  &  &  &  &  \\ 
-		\hline 
 		\multicolumn{7}{|c|}{Chapter 4} \\ 
 		\hline 
 		Iteration 1 - Architectural Plumbing &  & X & X & X &  &  \\ 
@@ -68,7 +66,7 @@ Throughout this project we have based our approach on the Microservices distribu
 
 Scripting languages are strongly preferred for data-science and mining purposes. Our choice of Axon constrains us to JVM languages which ultimately reduces the language choice to Groovy for scripting. However, R and Python are also popular in this field and are naturally not supported for execution on the JVM. 
 
-We are however not at a dead end, whilst architectural decisions imply decisions that are hard to change in the future or being decisions that we wish we would have made correctly at the beginning, good architecture adverts this crisis. Axon permits the change of the messaging middleware, allowing us to move towards a more widely supported system such as RabbitMQ if needed. Alternatively, we could consider a polyglotic JVM, such as Graal that permits the execution of multiple different languages that are not based on the JVM.
+We are however not at a dead end, whilst architectural decisions imply decisions that are hard to change in the future or being decisions that we wish we would have made correctly at the beginning, good architecture adverts this crisis. Axon permits the change of the messaging middleware, allowing us to move towards a more widely supported system such as RabbitMQ if needed. Alternatively, we could consider a polyglotic JVM, such as GraalVM \parencite{graalVM} that permits the execution of multiple different languages that are not based on the JVM.
 
 \subsection{Response model is very inflexible}
 
@@ -76,7 +74,7 @@ We have been unable to collate sufficient sources to make a correctly informed d
 
 We envision this could be realised through the definition of an extra attributes data map. These extra attributes would of course need a way of being accessed and presented within the IDE Web View that we have created, leading to extra concerns that need addressing such as the requirement of a template server where miners can optional define how they wish for their information to be presented; yet this very flexibility could lead to a confusing, inconsistent exploration experience on par with the search engine approach we were initially trying to improve.
 
-\subsection{Truly IDE Agnostic Plugins}
+\subsection{Truly IDE agnostic plugins}
 
 The vision has focused on enabling the retrieval of information from multiple sources. However, from implementing the architecture, have we noticed the potential applicability to a wider scope of interaction with external sources.
 
@@ -84,7 +82,7 @@ Through evolving the integration to focus on a more integrated presentation of d
 
 This of course, presents potential to provide a plugin repository or store that allows these integrations to be used according to the preference of each individual developer.
 
-\subsection{Enabling greater insight into Developers' Mindset}
+\subsection{Enabling greater insight into Developers' mindset}
 
 Understanding how developers work has been the subject for decades for many in the Software Engineering field. Companies also have an interest in understanding how they can squeeze more out of their employees.
 
