@@ -2,18 +2,23 @@
 
 \section{Appendix A - Personal Reflection}
 
-%TODO:
+One of the driving factors for deciding to embark on this project was the closeness to the reality of information fragmentation and disconnection which I have experienced across multiple organisations. I maintain that tools are never the solution to a cultural or people problem, but nonetheless are able to serve as stabilisers for the development of improved habits.
 
-Reflect on project
+It has been a rewarding experience to be able to synthesise my own in-depth understanding of Human factors of Software Engineering and support it with the relevant, academic research from a multitude of different disciplines. DevOps, as a discipline still in its infancy, suffers from extreme namespace pollution where the market has taken to exploiting those searching for the silver bullet to their problems. Showing the human mind and behaviour as the ultimate constraint has been key to distinguish market hype from the reality and illustrate how tools serve to support, not replace humans.
 
-Consider specific knowledge in the area
+I have been fortunate to have been able to develop a deep background in writing distributed systems before commencing this dissertation. Having ab understanding of the principles, technologies, languages and frameworks has definitely aided the production of a more-functional product than I was expecting in the time constraints.
 
-Studies undertaken
+Despite my ample understanding, I have still been able to extend my knowledge further. I have learnt how to package distributed applications for easier deployment through technologies such as Openshift and Helm. I now have experience in developing IDE extensions, something which until now, I had never attempted. 
 
-problems encountered
+This project has not been without hiccups. Being unable to obtain any computing infrastructure from the Computer Science Department to host the tools to support the development of the distributed has been a financial and effort bottleneck. A significant amount of time for this project was expended on finding alternatives to where this critical infrastructure could be established. Multiple reconfigurations of this were made as a result of the limitations they posed to the project, for example, moving from GitLab to GitHub, due to lack of support of raw packages in the free version.
 
-what would have been done differently next time.
+However, many of these problems surge from the distributed repository approach, adopted to illustrate the lack of coupling and modularity between components. Had I adopted the principles of a Monolithic repository, I would have likely been able to build the entire project without the need of artefact repository to store binaries.
 
+Despite strongly adopting the principles of Continuous Integration and Delivery, if given the opportunity to complete this project again, I would have included telemetry into this pipeline to make my granular approach even more granular. 
+
+Provided more time, some form of funding and the lack of ongoing health pandemic, it would have been rewarding to explore this project in the target organisational environment.
+
+\newpage
 \section{Appendix B - Notes on Project Infrastructure}
 \label{projectAssets}
 
@@ -59,3 +64,9 @@ The build process is orchestrated through a Travis CI instance, which builds aut
 \end{table}
 
 Instructions on installing the project for demo purposes can be found in the documentation \url{https://dominiccobo-fyp.github.io/docs/}.
+
+\section{Appendix C - Ethics Approval Letter}
+
+\includegraphics[width=\linewidth]{ethics-approval-letter.png}
+\newpage
+\includegraphics[width=\linewidth]{notice-of-ammendment-to-approved-protocol.png}
